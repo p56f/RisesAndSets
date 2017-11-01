@@ -2,7 +2,7 @@ package pl.pecet.risesandsets.controllers
 
 trait RisesAndSetsController {
 
-  def rise: String
+  def rise(parameters: Parameters) : String
 
-  def set: String
+  def set(parameters: Parameters) : String
 }
