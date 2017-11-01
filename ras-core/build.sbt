@@ -1,4 +1,4 @@
-name := "RisesAndSets-Core"
+name := "ras-core"
 
 version := "0.1"
 
