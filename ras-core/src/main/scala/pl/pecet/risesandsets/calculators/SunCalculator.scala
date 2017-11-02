@@ -1,18 +1,18 @@
 package pl.pecet.risesandsets.calculators
 
 import java.lang.Math._
-import java.time.LocalDate
+import java.time.{LocalDate, LocalTime}
 
 import pl.pecet.risesandsets.beans.DateAndCoardinatesParams
 
-class SunCalculator extends Calculator {
+object SunCalculator extends Calculator {
 
-  override def calculateRise(parameters: DateAndCoardinatesParams) : Int = {
-    convertToSeconds(calculateTime(parameters, rising = true))
+  override def calculateRise(parameters: DateAndCoardinatesParams) : LocalTime = {
+    LocalTime.ofSecondOfDay(convertToSeconds(calculateTime(parameters, rising = true)))
   }
 
-  override def calculateSet(parameters: DateAndCoardinatesParams) : Int = {
-    convertToSeconds(calculateTime(parameters, rising = false))
+  override def calculateSet(parameters: DateAndCoardinatesParams) : LocalTime = {
+    LocalTime.ofSecondOfDay(convertToSeconds(calculateTime(parameters, rising = false)))
   }
 
   private def calculateTime(parameters: DateAndCoardinatesParams, rising: Boolean) = {
@@ -80,5 +80,5 @@ class SunCalculator extends Calculator {
     }
   }
 
-  private def convertToSeconds(time: Double) = (time * 3600).toInt
+  private def convertToSeconds(time: Double) = (time * 3600).toLong
 }
