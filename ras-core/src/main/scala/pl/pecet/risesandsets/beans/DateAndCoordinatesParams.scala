@@ -2,7 +2,7 @@ package pl.pecet.risesandsets.beans
 
 import scala.beans.BeanProperty
 
-case class DateAndCoardinatesParams(
+case class DateAndCoordinatesParams(
   @BeanProperty var latitude: Double,
   @BeanProperty var longitude: Double,
   @BeanProperty var day: Int,

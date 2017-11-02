@@ -4,15 +4,15 @@ import java.lang.Math._
 import java.time.temporal.ChronoUnit
 import java.time.{LocalDate, LocalTime}
 
-import pl.pecet.risesandsets.beans.DateAndCoardinatesParams
+import pl.pecet.risesandsets.beans.DateAndCoordinatesParams
 
 object SunCalculator extends Calculator {
 
-  override def calculateRise(parameters: DateAndCoardinatesParams) : Option[LocalTime] = {
+  override def calculateRise(parameters: DateAndCoordinatesParams) : Option[LocalTime] = {
     calculateTime(parameters, rising = true)
   }
 
-  override def calculateSet(parameters: DateAndCoardinatesParams) : Option[LocalTime] = {
+  override def calculateSet(parameters: DateAndCoordinatesParams) : Option[LocalTime] = {
     calculateTime(parameters, rising = false)
   }
 
@@ -24,7 +24,7 @@ object SunCalculator extends Calculator {
     }
   }
 
-  private def calculateTime(parameters: DateAndCoardinatesParams, rising: Boolean) = {
+  private def calculateTime(parameters: DateAndCoordinatesParams, rising: Boolean) = {
     val dayOfYear = getDayOfYear(parameters.day, parameters.month, parameters.year)
     val lngHour = calculateLngHour(parameters.longitude)
     val t = calculateApproximateTime(dayOfYear, lngHour, rising)
