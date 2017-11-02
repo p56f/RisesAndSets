@@ -1,8 +1,8 @@
-package pl.pecet.risesandsets.controllers
+package pl.pecet.risesandsets.beans
 
 import scala.beans.BeanProperty
 
-case class Parameters (
+case class DateAndCoardinatesParams(
   @BeanProperty var latitude: Double,
   @BeanProperty var longitude: Double,
   @BeanProperty var day: Int,
