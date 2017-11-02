@@ -7,12 +7,12 @@ import pl.pecet.risesandsets.beans.DateAndCoardinatesParams
 
 object SunCalculator extends Calculator {
 
-  override def calculateRise(parameters: DateAndCoardinatesParams) : LocalTime = {
-    LocalTime.ofSecondOfDay(convertToSeconds(calculateTime(parameters, rising = true)))
+  override def calculateRise(parameters: DateAndCoardinatesParams) : Option[LocalTime] = {
+    calculateTime(parameters, rising = true)
   }
 
-  override def calculateSet(parameters: DateAndCoardinatesParams) : LocalTime = {
-    LocalTime.ofSecondOfDay(convertToSeconds(calculateTime(parameters, rising = false)))
+  override def calculateSet(parameters: DateAndCoardinatesParams) : Option[LocalTime] = {
+    calculateTime(parameters, rising = false)
   }
 
   private def calculateTime(parameters: DateAndCoardinatesParams, rising: Boolean) = {
@@ -21,7 +21,7 @@ object SunCalculator extends Calculator {
     val t = calculateApproximateTime(dayOfYear, lngHour, rising)
     val sunLongitude = calculateSunLongitude(t)
     val localTime = calculateHours(sunLongitude, lngHour, parameters.latitude, rising) + calculateRightAscension(sunLongitude) - (0.06571 * t) - 6.622
-    normalizeHour(localTime - lngHour)
+    convertToSeconds(normalizeHour(localTime - lngHour)).map(LocalTime.ofSecondOfDay)
   }
 
   private def getDayOfYear(day: Int, month: Int, year: Int) = {
@@ -37,7 +37,7 @@ object SunCalculator extends Calculator {
 
   private def calculateSunLongitude(time: Double) = {
     val sunMeanAnomaly = (0.9856 * time) - 3.289
-    normalizeAngle(sunMeanAnomaly + (1.916 * sin(toRadians(sunMeanAnomaly))) + (0.020 * sin(2 * toRadians(sunMeanAnomaly))) + 282.634)
+    normalizeAngle(sunMeanAnomaly + (1.916 * sin(toRadians(sunMeanAnomaly))) + (0.02 * sin(2 * toRadians(sunMeanAnomaly))) + 282.634)
   }
 
   private def calculateRightAscension(sunLongitude: Double) = {
@@ -80,5 +80,9 @@ object SunCalculator extends Calculator {
     }
   }
 
-  private def convertToSeconds(time: Double) = (time * 3600).toLong
+  private def convertToSeconds(time: Double) = time match {
+    case Double.NegativeInfinity
+         | Double.PositiveInfinity => None
+    case _ => Some((time * 3600).toLong)
+  }
 }

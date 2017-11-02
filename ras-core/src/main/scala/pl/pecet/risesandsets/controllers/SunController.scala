@@ -8,9 +8,20 @@ import pl.pecet.risesandsets.calculators.SunCalculator
 class SunController extends RisesAndSetsController {
 
   @GetMapping(Array("sunrise"))
-  override def rise(parameters: DateAndCoardinatesParams): String = SunCalculator.calculateRise(parameters).toString
+  override def rise(parameters: DateAndCoardinatesParams): String = {
+    val sunrise = SunCalculator.calculateRise(parameters)
+    sunrise match {
+      case None => "------------"
+      case Some(t) => t.toString
+    }
+  }
 
   @GetMapping(Array("sunset"))
-  override def set(parameters: DateAndCoardinatesParams): String = SunCalculator.calculateSet(parameters).toString
-
+  override def set(parameters: DateAndCoardinatesParams): String = {
+    val sunset = SunCalculator.calculateSet(parameters)
+    sunset match {
+      case None => "------------"
+      case Some(t) => t.toString
+    }
+  }
 }
