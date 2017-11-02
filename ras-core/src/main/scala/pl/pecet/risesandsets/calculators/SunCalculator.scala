@@ -1,6 +1,7 @@
 package pl.pecet.risesandsets.calculators
 
 import java.lang.Math._
+import java.time.temporal.ChronoUnit
 import java.time.{LocalDate, LocalTime}
 
 import pl.pecet.risesandsets.beans.DateAndCoardinatesParams
@@ -13,6 +14,14 @@ object SunCalculator extends Calculator {
 
   override def calculateSet(parameters: DateAndCoardinatesParams) : Option[LocalTime] = {
     calculateTime(parameters, rising = false)
+  }
+
+  def getDuration(rise: Option[LocalTime], set: Option[LocalTime]) : Option[LocalTime] = {
+    rise.flatMap {
+      t1 => set.flatMap {
+        t2 => Some(LocalTime.ofSecondOfDay(ChronoUnit.SECONDS.between(t1, t2)))
+      }
+    }
   }
 
   private def calculateTime(parameters: DateAndCoardinatesParams, rising: Boolean) = {
@@ -82,7 +91,8 @@ object SunCalculator extends Calculator {
 
   private def convertToSeconds(time: Double) = time match {
     case Double.NegativeInfinity
-         | Double.PositiveInfinity => None
+         | Double.PositiveInfinity
+         | Double.NaN => None
     case _ => Some((time * 3600).toLong)
   }
 }

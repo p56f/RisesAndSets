@@ -1,27 +1,22 @@
 package pl.pecet.risesandsets.controllers
 
+import java.time.temporal.ChronoUnit
+import java.time.{Duration, LocalTime}
+
 import org.springframework.web.bind.annotation.{GetMapping, RestController}
-import pl.pecet.risesandsets.beans.DateAndCoardinatesParams
+import pl.pecet.risesandsets.beans.{DateAndCoardinatesParams, SunResponseParams}
 import pl.pecet.risesandsets.calculators.SunCalculator
 
 @RestController
-class SunController extends RisesAndSetsController {
+class SunController {
 
-  @GetMapping(Array("sunrise"))
-  override def rise(parameters: DateAndCoardinatesParams): String = {
+  @GetMapping(Array("sun"))
+  def getSunriseAndSunset(parameters: DateAndCoardinatesParams) : SunResponseParams = {
     val sunrise = SunCalculator.calculateRise(parameters)
-    sunrise match {
-      case None => "------------"
-      case Some(t) => t.toString
-    }
-  }
-
-  @GetMapping(Array("sunset"))
-  override def set(parameters: DateAndCoardinatesParams): String = {
     val sunset = SunCalculator.calculateSet(parameters)
-    sunset match {
-      case None => "------------"
-      case Some(t) => t.toString
-    }
+    val duration = SunCalculator.getDuration(sunrise, sunset)
+    val polarDay = sunset.isEmpty
+    val polarNight = sunrise.isEmpty
+    SunResponseParams(sunrise.orNull, sunset.orNull, duration.orNull, polarDay, polarNight)
   }
 }
