@@ -1,8 +1,5 @@
 package pl.pecet.risesandsets.controllers
 
-import java.time.temporal.ChronoUnit
-import java.time.{Duration, LocalTime}
-
 import org.springframework.web.bind.annotation.{GetMapping, RestController}
 import pl.pecet.risesandsets.beans.{DateAndCoordinatesParams, SunResponseParams}
 import pl.pecet.risesandsets.calculators.SunCalculator
