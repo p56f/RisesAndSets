@@ -30,7 +30,7 @@ object SunCalculator extends Calculator {
     val t = calculateApproximateTime(dayOfYear, lngHour, rising)
     val sunLongitude = calculateSunLongitude(t)
     val localTime = calculateHours(sunLongitude, lngHour, parameters.latitude, rising) + calculateRightAscension(sunLongitude) - (0.06571 * t) - 6.622
-    convertToSeconds(normalizeHour(localTime - lngHour)).map(LocalTime.ofSecondOfDay)
+    convertToSeconds(normalizeHour(localTime - lngHour), parameters.timeOffset).map(LocalTime.ofSecondOfDay)
   }
 
   private def getDayOfYear(day: Int, month: Int, year: Int) = {
@@ -89,10 +89,10 @@ object SunCalculator extends Calculator {
     }
   }
 
-  private def convertToSeconds(time: Double) = time match {
+  private def convertToSeconds(time: Double, timeOffset: Int) = time match {
     case Double.NegativeInfinity
          | Double.PositiveInfinity
          | Double.NaN => None
-    case _ => Some((time * 3600).toLong)
+    case _ => Some((time * 3600).toLong + timeOffset)
   }
 }
