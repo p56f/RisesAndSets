@@ -16,9 +16,9 @@ object SunCalculator extends Calculator {
     calculateTime(parameters, rising = false)
   }
 
-  def getDuration(rise: Option[LocalTime], set: Option[LocalTime]) : Option[LocalTime] = {
-    rise.flatMap {
-      t1 => set.flatMap {
+  def getDuration(start: Option[LocalTime], stop: Option[LocalTime]) : Option[LocalTime] = {
+    start.flatMap {
+      t1 => stop.flatMap {
         t2 => Some(LocalTime.ofSecondOfDay(ChronoUnit.SECONDS.between(t1, t2)))
       }
     }
