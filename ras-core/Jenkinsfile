@@ -20,12 +20,11 @@ pipeline {
 
         stage('Build') {
             steps {
-                cd ras_core
-                sh 'sbt clean test'
+                sh 'cd ras-core && sbt clean test'
             }
             post {
                 success {
-                    junit 'ras_core/target/test-reports/*.xml'
+                    junit 'ras-core/target/test-reports/*.xml'
                 }
             }
         }
