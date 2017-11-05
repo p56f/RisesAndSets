@@ -1,0 +1,33 @@
+#!/usr/bin/env groovy
+
+pipeline {
+    agent any
+
+    parameters {
+        string(name: 'BRANCH', defaultValue: 'master', description: 'Git branch')
+        string(name: 'COMMIT', defaultValue: 'LATEST', description: 'SHA of Git commit')
+    }
+
+    stages{
+        stage('Git checkout') {
+            steps {
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: ((params.COMMIT == 'LATEST') ? params.BRANCH : params.COMMIT)]],
+                    userRemoteConfigs: [[url: 'https://github.com/p56f/RisesAndSets.git']]])
+            }
+        }
+
+        stage('Build') {
+            steps {
+                cd ras_core
+                sh 'sbt clean test'
+            }
+            post {
+                success {
+                    junit 'ras_core/target/test-reports/*.xml'
+                }
+            }
+        }
+    }
+}
