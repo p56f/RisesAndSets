@@ -8,6 +8,8 @@ import pl.pecet.risesandsets.beans.DateAndCoordinatesParams
 
 object SunCalculator extends Calculator {
 
+  private val SecondsInDay = 24 * 3600
+
   override def calculateRise(parameters: DateAndCoordinatesParams) : Option[LocalTime] = {
     calculateTime(parameters, rising = true)
   }
@@ -19,7 +21,14 @@ object SunCalculator extends Calculator {
   def getDuration(start: Option[LocalTime], stop: Option[LocalTime]) : Option[LocalTime] = {
     start.flatMap {
       t1 => stop.flatMap {
-        t2 => Some(LocalTime.ofSecondOfDay(ChronoUnit.SECONDS.between(t1, t2)))
+        t2 => {
+          if (t1.isAfter(t2)) {
+            Some(LocalTime.ofSecondOfDay(SecondsInDay - t1.toSecondOfDay
+              + ChronoUnit.SECONDS.between(LocalTime.MIDNIGHT, t2)))
+          } else {
+            Some(LocalTime.ofSecondOfDay(ChronoUnit.SECONDS.between(t1, t2)))
+          }
+        }
       }
     }
   }
@@ -93,6 +102,9 @@ object SunCalculator extends Calculator {
     case Double.NegativeInfinity
          | Double.PositiveInfinity
          | Double.NaN => None
-    case _ => Some((time * 3600).toLong + timeOffset)
+    case _ => {
+      val timeInSeconds = (time * 3600).toLong + timeOffset
+      if (timeInSeconds >= 0) Some(timeInSeconds % SecondsInDay) else Some(SecondsInDay - timeInSeconds)
+    }
   }
 }
