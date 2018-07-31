@@ -4,9 +4,11 @@ import java.lang.Math._
 import java.time.temporal.ChronoUnit
 import java.time.{LocalDate, LocalTime}
 
+import org.springframework.stereotype.Service
 import pl.pecet.risesandsets.beans.DateAndCoordinatesParams
 
-object SunCalculator extends Calculator {
+@Service
+class SunCalculator extends Calculator {
 
   private val SecondsInDay = 24 * 3600
 

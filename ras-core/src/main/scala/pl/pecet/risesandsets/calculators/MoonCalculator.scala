@@ -1,10 +1,12 @@
 package pl.pecet.risesandsets.calculators
 import java.time.LocalTime
 
+import org.springframework.stereotype.Service
 import pl.pecet.risesandsets.beans.DateAndCoordinatesParams
 import pl.pecet.risesandsets.enums.MoonPhase
 
-object MoonCalculator extends Calculator {
+@Service
+class MoonCalculator extends Calculator {
 
   override def calculateRise(parameters: DateAndCoordinatesParams): Option[LocalTime] = Some(LocalTime.now())
 

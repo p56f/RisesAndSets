@@ -5,13 +5,13 @@ import pl.pecet.risesandsets.beans.{DateAndCoordinatesParams, MoonResponseParams
 import pl.pecet.risesandsets.calculators.MoonCalculator
 
 @RestController
-class MoonController {
+class MoonController(moonCalculator: MoonCalculator) {
 
   @GetMapping(Array("moon"))
   def getMoonriseMoonsetAndPhase(parameters: DateAndCoordinatesParams) : MoonResponseParams = {
-    val moonrise = MoonCalculator.calculateRise(parameters)
-    val moonset = MoonCalculator.calculateSet(parameters)
-    val phase = MoonCalculator.calculatePhase(parameters)
+    val moonrise = moonCalculator.calculateRise(parameters)
+    val moonset = moonCalculator.calculateSet(parameters)
+    val phase = moonCalculator.calculatePhase(parameters)
     MoonResponseParams(moonrise.orNull, moonset.orNull, phase.name)
   }
 }
