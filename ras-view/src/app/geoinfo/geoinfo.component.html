@@ -1,0 +1,23 @@
+<h2>Location for {{address}}</h2>
+<div>
+  <label>Address:
+    <input [(ngModel)]="address" placeholder="Address">
+    <button (click)="getLocationWithTimeZone()">Fetch</button>
+  </label>
+</div>
+<br/>
+<div>
+  <div><span>Current date and time: </span>{{currentDateTime | date: 'dd.MM.yyyy HH:mm:ss ZZ'}}</div>
+  <div><span>Offset: </span>{{currentDateTimeOffset}}</div>
+</div>
+<div>
+  <div><span>Formatted address: </span>{{geoLocation.formattedAddress}}</div>
+  <div><span>Latitude: </span>{{geoLocation.latitude}}</div>
+  <div><span>Longitude: </span>{{geoLocation.longitude}}</div>
+</div>
+<div>
+  <div><span>TimeZone Id: </span>{{timeZone.timeZoneId}}</div>
+  <div><span>TimeZone name: </span>{{timeZone.timeZoneName}}</div>
+  <div><span>Raw offset: </span>{{timeZone.rawOffset}}</div>
+  <div><span>DST offset: </span>{{timeZone.dstOffset}}</div>
+</div>
