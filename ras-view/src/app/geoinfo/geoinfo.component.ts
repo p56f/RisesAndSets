@@ -36,7 +36,7 @@ export class GeoInfoComponent implements OnInit {
   ngOnInit() {
   }
 
-  getLocationWithTimeZone() {
+  getGeoInfoForAddress() {
     this.geoLocationService.getLocation(this.address).subscribe( data => 
       {
         const result = data['results'][0];
