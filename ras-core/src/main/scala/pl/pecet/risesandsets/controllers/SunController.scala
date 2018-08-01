@@ -1,10 +1,11 @@
 package pl.pecet.risesandsets.controllers
 
-import org.springframework.web.bind.annotation.{GetMapping, RestController}
+import org.springframework.web.bind.annotation.{CrossOrigin, GetMapping, RestController}
 import pl.pecet.risesandsets.beans.{DateAndCoordinatesParams, SunResponseParams}
 import pl.pecet.risesandsets.calculators.SunCalculator
 
 @RestController
+@CrossOrigin(origins = Array("http://localhost:4200"))
 class SunController(sunCalculator: SunCalculator) {
 
   @GetMapping(Array("sun"))
