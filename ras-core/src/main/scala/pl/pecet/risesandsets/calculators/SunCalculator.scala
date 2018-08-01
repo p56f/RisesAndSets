@@ -106,7 +106,7 @@ class SunCalculator extends Calculator {
          | Double.NaN => None
     case _ => {
       val timeInSeconds = (time * 3600).toLong + timeOffset
-      if (timeInSeconds >= 0) Some(timeInSeconds % SecondsInDay) else Some(SecondsInDay - timeInSeconds)
+      if (timeInSeconds >= 0) Some(timeInSeconds % SecondsInDay) else Some(SecondsInDay + timeInSeconds)
     }
   }
 }
