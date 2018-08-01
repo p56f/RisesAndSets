@@ -7,8 +7,7 @@
 </div>
 <br/>
 <div>
-  <div><span>Current date and time: </span>{{currentDateTime | date: 'dd.MM.yyyy HH:mm:ss ZZ'}}</div>
-  <div><span>Offset: </span>{{currentDateTimeOffset}}</div>
+  <div><span>Current date and time: </span>{{currentDateTime | date: 'dd.MM.yyyy HH:mm:ss':timeZoneOffset}}</div>
 </div>
 <div>
   <div><span>Formatted address: </span>{{geoLocation.formattedAddress}}</div>

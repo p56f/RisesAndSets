@@ -20,8 +20,8 @@ export class GeoInfoComponent implements OnInit {
   private timeZone : TimeZone;
 
   private currentDateTime = new Date();
-
-  private currentDateTimeOffset = this.getOffset();
+  
+  private timeZoneOffset = '+0000'
 
   constructor(
     private geoLocationService : GeoLocationService,
@@ -48,14 +48,24 @@ export class GeoInfoComponent implements OnInit {
   private getTimeZone() {
     this.timeZoneService
       .getTimeZone(this.geoLocation.latitude, this.geoLocation.longitude, this.getCurrentTimestamp())
-      .subscribe( tz => this.timeZone = tz);
+      .subscribe( tz => {
+        this.timeZone = tz;
+        this.currentDateTime = new Date();
+        this.timeZoneOffset = this.getTimeZoneOffset();
+      });
   }
 
   private getCurrentTimestamp() : number {
     return Math.round(this.currentDateTime.getTime() / 1000);
   }
 
-  private getOffset() : number {
-    return this.currentDateTime.getTimezoneOffset();
+  private getTimeZoneOffset() : string {
+    let offsetInMinutes = (this.timeZone.rawOffset + this.timeZone.dstOffset) / 60;
+    let hoursPart = Math.floor(offsetInMinutes / 60);
+    let hoursPartString = `${Math.abs(hoursPart)}`.padStart(2, '0');
+    let minutesPartString = `${offsetInMinutes % 60}`.padStart(2, '0');
+
+    return `${(hoursPart >= 0) ? '+' : '-'}${hoursPartString}${minutesPartString}`;
   }
+
 }
