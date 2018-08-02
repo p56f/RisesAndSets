@@ -67,7 +67,7 @@ class SunCalculator extends Calculator {
     (sunRightAscension + lquadrant - raquadrant) / 15
   }
 
-  private def calculateHours(sunLongitude: Double, rightAscension: Double, latitude: Double, rising: Boolean) = {
+  private def calculateHours(sunLongitude: Double, rightAscension: Double, latitude: Double, rising: Boolean) : Double = {
     val sinDec = 0.39782 * sin(toRadians(sunLongitude))
     val cosDec = cos(asin(sinDec))
     val zenith = 90 + (50.0 / 60.0)
