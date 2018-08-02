@@ -34,6 +34,11 @@ export class GeoInfoComponent implements OnInit {
     private sunService: SunService) { }
 
   ngOnInit() {
+    this.geoLocation = {
+      formattedAddress: '',
+      latitude: 51.2,
+      longitude: 17.5
+    };
   }
 
   getGeoInfoForAddress() {
