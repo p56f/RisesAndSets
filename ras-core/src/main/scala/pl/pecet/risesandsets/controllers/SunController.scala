@@ -5,7 +5,7 @@ import pl.pecet.risesandsets.beans.{DateAndCoordinatesParams, SunResponseParams}
 import pl.pecet.risesandsets.calculators.SunCalculator
 
 @RestController
-@CrossOrigin(origins = Array("http://localhost:4200"))
+@CrossOrigin(origins = Array("${sun.controller.cors.host}"))
 class SunController(sunCalculator: SunCalculator) {
 
   @GetMapping(Array("sun"))

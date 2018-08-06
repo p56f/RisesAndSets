@@ -5,7 +5,7 @@ import pl.pecet.risesandsets.beans.{DateAndCoordinatesParams, MoonResponseParams
 import pl.pecet.risesandsets.calculators.MoonCalculator
 
 @RestController
-@CrossOrigin(origins = Array("http://localhost:4200"))
+@CrossOrigin(origins = Array("${moon.controller.cors.host}"))
 class MoonController(moonCalculator: MoonCalculator) {
 
   @GetMapping(Array("moon"))
