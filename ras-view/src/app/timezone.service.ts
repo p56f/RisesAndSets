@@ -5,14 +5,16 @@ import { Observable } from 'rxjs';
 
 import { TimeZone } from './timezone';
 
+import * as apis from '../private/external.apis.json';
+
 @Injectable({
   providedIn: 'root'
 })
 export class TimeZoneService {
 	
-  private baseUrl = 'https://maps.googleapis.com/maps/api/timezone/json';
+  private baseUrl = apis['googleAPIs']['urls']['timezone'];
 
-  private apiKey = 'AIzaSyDiokY2HUj9xPhUh2NnfUUEAGG9qKxuLvk';
+  private apiKey = apis['googleAPIs']['key'];
 
   constructor(private http : HttpClient) {}
   

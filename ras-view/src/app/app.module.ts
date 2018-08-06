@@ -7,6 +7,8 @@ import { AgmCoreModule } from '@agm/core';
 import { AppComponent } from './app.component';
 import { GeoInfoComponent } from './geoinfo/geoinfo.component';
 
+import * as apis from '../private/external.apis.json';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -17,7 +19,7 @@ import { GeoInfoComponent } from './geoinfo/geoinfo.component';
     FormsModule,
     HttpClientModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyDiokY2HUj9xPhUh2NnfUUEAGG9qKxuLvk'
+      apiKey: apis['googleAPIs']['key']
     })
   ],
   providers: [],

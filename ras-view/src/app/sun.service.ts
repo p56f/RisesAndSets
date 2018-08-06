@@ -3,12 +3,14 @@ import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
+import * as apis from '../private/external.apis.json';
+
 @Injectable({
   providedIn: 'root'
 })
 export class SunService {
 
-  private baseUrl = 'http://localhost:12800/sun';
+  private baseUrl = apis['internalAPIs']['urls']['sun'];
 
   constructor(private http : HttpClient) {}
   
