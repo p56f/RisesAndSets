@@ -2,7 +2,7 @@
   <h2>Location for {{address}}</h2>
   <div>
     <label>Address:
-      <input [(ngModel)]="address" placeholder="Address">
+      <input [(ngModel)]="address" (keyup.enter)="getGeoInfoForAddress()" placeholder="Address">
       <button (click)="getGeoInfoForAddress()">Fetch</button>
     </label>
   </div>
@@ -39,6 +39,8 @@
   </div>
 </div>
 <div class="column right">
-  <agm-map [latitude]="geoLocation.latitude" [longitude]="geoLocation.longitude">
+  <agm-map [latitude]="geoLocation.latitude" [longitude]="geoLocation.longitude"
+    (mapClick)="onChooseLocation($event)">
+    <agm-marker [latitude]="geoLocation.latitude" [longitude]="geoLocation.longitude"></agm-marker>
   </agm-map>
 </div>

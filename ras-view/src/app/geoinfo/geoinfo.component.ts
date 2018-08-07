@@ -16,17 +16,17 @@ import { SunService } from '../sun.service';
 })
 export class GeoInfoComponent implements OnInit {
   
-  private address = '';
+  private _address = '';
   
-  private geoLocation : GeoLocation;
+  private _geoLocation : GeoLocation;
 
-  private timeZone : TimeZone;
+  private _timeZone : TimeZone;
 
-  private sunInfo : SunInfo;
+  private _sunInfo : SunInfo;
 
-  private currentDateTime = new Date();
+  private _currentDateTime = new Date();
   
-  private timeZoneOffset = '+0000'
+  private _timeZoneOffset = '+0000'
 
   constructor(
     private geoLocationService : GeoLocationService,
@@ -34,19 +34,46 @@ export class GeoInfoComponent implements OnInit {
     private sunService: SunService) { }
 
   ngOnInit() {
-    this.geoLocation = {
+    this._geoLocation = {
       formattedAddress: '',
       latitude: 51.2,
       longitude: 17.5
     };
   }
 
+  get address() {
+    return this._address;
+  }
+
+  set address(address: string) {
+    this._address = address;
+  }
+
+  get geoLocation() {
+    return this._geoLocation;
+  }
+
+  get timeZone() {
+    return this._timeZone;
+  }
+
+  get sunInfo() {
+    return this._sunInfo;
+  }
+
+  get currentDateTime() {
+    return this._currentDateTime;
+  }
+
+  get timeZoneOffset() {
+    return this._timeZoneOffset;
+  }
+
   getGeoInfoForAddress() {
-    this.geoLocationService.getLocation(this.address).subscribe( data => 
-      {
+    this.geoLocationService.getLocation(this._address).subscribe( data => {
         const result = data['results'][0];
         const location = result['geometry']['location'];
-        this.geoLocation = {
+        this._geoLocation = {
           formattedAddress: result['formatted_address'],
           latitude: location['lat'],
           longitude: location['lng']
@@ -56,25 +83,37 @@ export class GeoInfoComponent implements OnInit {
     );
   }
 
+  onChooseLocation(event) {
+    this._geoLocation.latitude = event.coords.lat;
+    this._geoLocation.longitude = event.coords.lng;
+
+    this.geoLocationService
+      .getFormattedAddress(this._geoLocation.latitude, this._geoLocation.longitude)
+      .subscribe( data => {
+        this._geoLocation.formattedAddress = data['results'][0]['formatted_address'];
+        this.getTimeZone();
+      });
+  }
+
   private getTimeZone() {
     this.timeZoneService
-      .getTimeZone(this.geoLocation.latitude, this.geoLocation.longitude, this.getCurrentTimestamp())
+      .getTimeZone(this._geoLocation.latitude, this._geoLocation.longitude, this.getCurrentTimestamp())
       .subscribe( tz => {
-        this.timeZone = tz;
-        this.currentDateTime = new Date();
-        this.timeZoneOffset = this.getTimeZoneOffset();
+        this._timeZone = tz;
+        this._currentDateTime = new Date();
+        this._timeZoneOffset = this.getTimeZoneOffset();
         this.getSunInfo();
       });
   }
 
   private getSunInfo() {
     this.sunService
-      .getSunInfo(this.geoLocation.latitude, this.geoLocation.longitude, this.currentDateTime, this.getTimeZoneOffsetInSeconds())
+      .getSunInfo(this._geoLocation.latitude, this._geoLocation.longitude, this._currentDateTime, this.getTimeZoneOffsetInSeconds())
       .subscribe( data => {
         const polarDay = data['polarDay'];
         const polarNight = data['polarNight'];
         if (polarDay) {
-          this.sunInfo = {
+          this._sunInfo = {
             sunrise: '-',
             sunset: '-',
             duration: 'Polar day (24h)',
@@ -82,7 +121,7 @@ export class GeoInfoComponent implements OnInit {
             polarNight: false
           };  
         } else if (polarNight) {
-          this.sunInfo = {
+          this._sunInfo = {
             sunrise: '-',
             sunset: '-',
             duration: 'Polar night (0h)',
@@ -90,7 +129,7 @@ export class GeoInfoComponent implements OnInit {
             polarNight: true
           };
         } else {
-          this.sunInfo = {
+          this._sunInfo = {
             sunrise: this.getTimeAsString(data['sunrise']),
             sunset: this.getTimeAsString(data['sunset']),
             duration: this.getTimeAsString(data['duration']),
@@ -102,11 +141,11 @@ export class GeoInfoComponent implements OnInit {
   }
 
   private getCurrentTimestamp() : number {
-    return Math.round(this.currentDateTime.getTime() / 1000);
+    return Math.round(this._currentDateTime.getTime() / 1000);
   }
 
   private getTimeZoneOffsetInSeconds() : number {
-    return this.timeZone.rawOffset + this.timeZone.dstOffset
+    return this._timeZone.rawOffset + this._timeZone.dstOffset
   }
 
   private getTimeZoneOffset() : string {

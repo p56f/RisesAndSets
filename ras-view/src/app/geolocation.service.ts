@@ -20,4 +20,9 @@ export class GeoLocationService {
     const url = `${this.baseUrl}?address=${address}&key=${this.apiKey}`;
     return this.http.get(url);
   }
+
+  getFormattedAddress(latitude: number, longitude: number) {
+    const url = `${this.baseUrl}?latlng=${latitude},${longitude}&key=${this.apiKey}`;
+    return this.http.get(url);
+  }
 }
