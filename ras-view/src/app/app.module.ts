@@ -7,12 +7,15 @@ import { AgmCoreModule } from '@agm/core';
 import { AppComponent } from './app.component';
 import { GeoInfoComponent } from './geoinfo/geoinfo.component';
 
+import { DmsPipe } from './dms.pipe';
+
 import * as apis from '../private/external.apis.json';
 
 @NgModule({
   declarations: [
     AppComponent,
-    GeoInfoComponent
+    GeoInfoComponent,
+    DmsPipe
   ],
   imports: [
     BrowserModule,

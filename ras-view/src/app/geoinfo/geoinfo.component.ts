@@ -151,15 +151,15 @@ export class GeoInfoComponent implements OnInit {
   private getTimeZoneOffset() : string {
     const offsetInMinutes = this.getTimeZoneOffsetInSeconds() / 60;
     const hoursPart = Math.floor(offsetInMinutes / 60);
-    const hoursPartString = `${Math.abs(hoursPart)}`.padStart(2, '0');
-    const minutesPartString = `${offsetInMinutes % 60}`.padStart(2, '0');
+    const hoursPartString = Math.abs(hoursPart).toString().padStart(2, '0');
+    const minutesPartString = (offsetInMinutes % 60).toString().padStart(2, '0');
     return `${(hoursPart >= 0) ? '+' : '-'}${hoursPartString}${minutesPartString}`;
   }
 
   private getTimeAsString(time: any) : string {
-    const hour = `${time['hour']}`.padStart(2, '0')
-    const minute = `${time['minute']}`.padStart(2, '0')
-    const second = `${time['second']}`.padStart(2, '0')
-    return `${hour}:${minute}:${second}`
+    const hour = time['hour'].toString().padStart(2, '0');
+    const minute = time['minute'].toString().padStart(2, '0');
+    const second = time['second'].toString().padStart(2, '0');
+    return `${hour}:${minute}:${second}`;
   }
 }

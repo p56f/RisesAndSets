@@ -15,9 +15,9 @@
     <div>
       <span>Formatted address: </span>{{geoLocation.formattedAddress}}</div>
     <div>
-      <span>Latitude: </span>{{geoLocation.latitude | number:'.2-2'}}</div>
+      <span>Latitude: </span>{{geoLocation.latitude | dms:'lat'}}</div>
     <div>
-      <span>Longitude: </span>{{geoLocation.longitude | number:'.2-2'}}</div>
+      <span>Longitude: </span>{{geoLocation.longitude | dms:'lng'}}</div>
   </div>
   <div>
     <div>
