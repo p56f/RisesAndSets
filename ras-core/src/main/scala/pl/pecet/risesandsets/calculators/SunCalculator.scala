@@ -2,21 +2,21 @@ package pl.pecet.risesandsets.calculators
 
 import java.lang.Math._
 import java.time.temporal.ChronoUnit
-import java.time.{LocalDate, LocalTime}
+import java.time.{Duration, LocalDate, LocalTime}
 
 import org.springframework.stereotype.Service
-import pl.pecet.risesandsets.beans.DateAndCoordinatesParams
+import pl.pecet.risesandsets.beans.DateTimeAndCoordinatesParams
+
+import SunCalculator._
 
 @Service
 class SunCalculator extends Calculator {
 
-  private val SecondsInDay = 24 * 3600
-
-  override def calculateRise(parameters: DateAndCoordinatesParams) : Option[LocalTime] = {
+  override def calculateRise(parameters: DateTimeAndCoordinatesParams) : Option[LocalTime] = {
     calculateTime(parameters, rising = true)
   }
 
-  override def calculateSet(parameters: DateAndCoordinatesParams) : Option[LocalTime] = {
+  override def calculateSet(parameters: DateTimeAndCoordinatesParams) : Option[LocalTime] = {
     calculateTime(parameters, rising = false)
   }
 
@@ -35,7 +35,7 @@ class SunCalculator extends Calculator {
     }
   }
 
-  private def calculateTime(parameters: DateAndCoordinatesParams, rising: Boolean) = {
+  private def calculateTime(parameters: DateTimeAndCoordinatesParams, rising: Boolean) = {
     val dayOfYear = getDayOfYear(parameters.day, parameters.month, parameters.year)
     val lngHour = calculateLngHour(parameters.longitude)
     val t = calculateApproximateTime(dayOfYear, lngHour, rising)
@@ -109,4 +109,8 @@ class SunCalculator extends Calculator {
       if (timeInSeconds >= 0) Some(timeInSeconds % SecondsInDay) else Some(SecondsInDay + timeInSeconds)
     }
   }
+}
+
+object SunCalculator {
+  private final val SecondsInDay = Duration.ofDays(1).getSeconds
 }

@@ -1,7 +1,7 @@
 package pl.pecet.risesandsets.controllers
 
 import org.springframework.web.bind.annotation.{CrossOrigin, GetMapping, RestController}
-import pl.pecet.risesandsets.beans.{DateAndCoordinatesParams, SunResponseParams}
+import pl.pecet.risesandsets.beans.{DateTimeAndCoordinatesParams, SunResponseParams}
 import pl.pecet.risesandsets.calculators.SunCalculator
 
 @RestController
@@ -9,7 +9,7 @@ import pl.pecet.risesandsets.calculators.SunCalculator
 class SunController(sunCalculator: SunCalculator) {
 
   @GetMapping(Array("sun"))
-  def getSunriseAndSunset(parameters: DateAndCoordinatesParams) : SunResponseParams = {
+  def getSunriseAndSunset(parameters: DateTimeAndCoordinatesParams) : SunResponseParams = {
     val sunrise = sunCalculator.calculateRise(parameters)
     val sunset = sunCalculator.calculateSet(parameters)
     val duration = sunCalculator.getDuration(sunrise, sunset)

@@ -2,10 +2,10 @@ package pl.pecet.risesandsets.calculators
 
 import java.time.LocalTime
 
-import pl.pecet.risesandsets.beans.DateAndCoordinatesParams
+import pl.pecet.risesandsets.beans.DateTimeAndCoordinatesParams
 
 trait Calculator {
-  def calculateRise(parameters: DateAndCoordinatesParams) : Option[LocalTime]
+  def calculateRise(parameters: DateTimeAndCoordinatesParams) : Option[LocalTime]
 
-  def calculateSet(parameters: DateAndCoordinatesParams) : Option[LocalTime]
+  def calculateSet(parameters: DateTimeAndCoordinatesParams) : Option[LocalTime]
 }

@@ -3,13 +3,13 @@ package pl.pecet.risesandsets.calculators
 import java.time.{DateTimeException, LocalTime}
 
 import org.scalatest.FunSuite
-import pl.pecet.risesandsets.beans.DateAndCoordinatesParams
+import pl.pecet.risesandsets.beans.DateTimeAndCoordinatesParams
 
 class SunCalculatorTest extends FunSuite {
 
-  private val warsawSummerParams = DateAndCoordinatesParams(latitude = 52.24d, longitude = 21.01d, day = 21, month = 6, year = 2017, timeOffset = 7200)
+  private val warsawSummerParams = DateTimeAndCoordinatesParams(latitude = 52.24d, longitude = 21.01d, day = 21, month = 6, year = 2017, timeOffset = 7200)
 
-  private val warsawWinterParams = DateAndCoordinatesParams(latitude = 52.24d, longitude = 21.01d, day = 22, month = 12, year = 2017, timeOffset = 3600)
+  private val warsawWinterParams = DateTimeAndCoordinatesParams(latitude = 52.24d, longitude = 21.01d, day = 22, month = 12, year = 2017, timeOffset = 3600)
 
   private val sunCalculator = new SunCalculator()
 
@@ -85,13 +85,13 @@ class SunCalculatorTest extends FunSuite {
   }
 
   test("Polar day on arctic circle (21/06/2017)") {
-    val arcticCircleSummerParams = DateAndCoordinatesParams(latitude = 66.57d, longitude = 0.0d, day = 21, month = 6, year = 2017, timeOffset = 0)
+    val arcticCircleSummerParams = DateTimeAndCoordinatesParams(latitude = 66.57d, longitude = 0.0d, day = 21, month = 6, year = 2017, timeOffset = 0)
     val sunset = sunCalculator.calculateSet(arcticCircleSummerParams)
     assert(sunset.isEmpty)
   }
 
   test("Polar night in Kiruna (22/12/2017)") {
-    val kirunaWinterParams = DateAndCoordinatesParams(latitude = 67.86d, longitude = 20.26d, day = 22, month = 12, year = 2017, timeOffset = 3600)
+    val kirunaWinterParams = DateTimeAndCoordinatesParams(latitude = 67.86d, longitude = 20.26d, day = 22, month = 12, year = 2017, timeOffset = 3600)
     val sunRise = sunCalculator.calculateRise(kirunaWinterParams)
     assert(sunRise.isEmpty)
   }

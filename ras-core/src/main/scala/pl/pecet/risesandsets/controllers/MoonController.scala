@@ -1,7 +1,7 @@
 package pl.pecet.risesandsets.controllers
 
 import org.springframework.web.bind.annotation.{CrossOrigin, GetMapping, RestController}
-import pl.pecet.risesandsets.beans.{DateAndCoordinatesParams, MoonResponseParams}
+import pl.pecet.risesandsets.beans.{DateTimeAndCoordinatesParams, MoonResponseParams}
 import pl.pecet.risesandsets.calculators.MoonCalculator
 
 @RestController
@@ -9,7 +9,7 @@ import pl.pecet.risesandsets.calculators.MoonCalculator
 class MoonController(moonCalculator: MoonCalculator) {
 
   @GetMapping(Array("moon"))
-  def getMoonriseMoonsetAndPhase(parameters: DateAndCoordinatesParams) : MoonResponseParams = {
+  def getMoonriseMoonsetAndPhase(parameters: DateTimeAndCoordinatesParams) : MoonResponseParams = {
     val moonrise = moonCalculator.calculateRise(parameters)
     val moonset = moonCalculator.calculateSet(parameters)
     val phase = moonCalculator.calculatePhase(parameters)
