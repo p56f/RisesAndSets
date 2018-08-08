@@ -8,6 +8,7 @@ import { TimeZoneService } from '../timezone.service';
 
 import { SunInfo } from '../suninfo';
 import { SunService } from '../sun.service';
+import { MoonService } from '../moon.service';
 
 @Component({
   selector: 'app-geoInfo',
@@ -26,12 +27,15 @@ export class GeoInfoComponent implements OnInit {
 
   private _currentDateTime = new Date();
   
-  private _timeZoneOffset = '+0000'
+  private _timeZoneOffset = '+0000';
+
+  private _moonPhase = '';
 
   constructor(
     private geoLocationService : GeoLocationService,
     private timeZoneService: TimeZoneService,
-    private sunService: SunService) { }
+    private sunService: SunService, 
+    private moonService: MoonService) { }
 
   ngOnInit() {
     this._geoLocation = {
@@ -69,6 +73,10 @@ export class GeoInfoComponent implements OnInit {
     return this._timeZoneOffset;
   }
 
+  get moonPhase() {
+    return this._moonPhase;
+  }
+
   getGeoInfoForAddress() {
     this.geoLocationService.getLocation(this._address).subscribe( data => {
         const result = data['results'][0];
@@ -103,6 +111,7 @@ export class GeoInfoComponent implements OnInit {
         this._currentDateTime = new Date();
         this._timeZoneOffset = this.getTimeZoneOffset();
         this.getSunInfo();
+        this.getMoonPhase();
       });
   }
 
@@ -137,6 +146,14 @@ export class GeoInfoComponent implements OnInit {
             polarNight: false
           };
         }
+      });
+  }
+
+  private getMoonPhase() {
+    this.moonService
+      .getMoonInfo(this._currentDateTime, this._timeZone.timeZoneId)
+      .subscribe( data => {
+        this._moonPhase = data['phase'];
       });
   }
 
