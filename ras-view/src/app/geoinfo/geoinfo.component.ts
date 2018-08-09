@@ -92,6 +92,7 @@ export class GeoInfoComponent implements OnInit {
   }
 
   onChooseLocation(event) {
+    this._address = '';
     this._geoLocation.latitude = event.coords.lat;
     this._geoLocation.longitude = event.coords.lng;
 
@@ -153,7 +154,7 @@ export class GeoInfoComponent implements OnInit {
     this.moonService
       .getMoonInfo(this._currentDateTime, this._timeZone.timeZoneId)
       .subscribe( data => {
-        this._moonPhase = data['phase'];
+        this._moonPhase = this.getMoonPhaseName(data['phase']);
       });
   }
 
@@ -178,5 +179,9 @@ export class GeoInfoComponent implements OnInit {
     const minute = time['minute'].toString().padStart(2, '0');
     const second = time['second'].toString().padStart(2, '0');
     return `${hour}:${minute}:${second}`;
+  }
+
+  private getMoonPhaseName(moonPhase: string) : string {
+    return moonPhase.charAt(0) + moonPhase.substr(1).replace(/[A-Z]/, ' $&').toLowerCase();
   }
 }

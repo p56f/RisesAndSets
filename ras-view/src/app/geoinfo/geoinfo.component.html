@@ -1,5 +1,4 @@
-<div class="column left">
-  <h2>Location for {{address}}</h2>
+<div class="geoInfo">
   <div>
     <label>Address:
       <input [(ngModel)]="address" (keyup.enter)="getGeoInfoForAddress()" placeholder="Address">
@@ -9,42 +8,49 @@
   <br/>
   <div>
     <div>
-      <span>Current date and time: </span>{{currentDateTime | date: 'dd.MM.yyyy HH:mm:ss':timeZoneOffset}}</div>
+      <span class="label">Current date and time: </span>
+      <span>{{currentDateTime | date: 'dd.MM.yyyy HH:mm:ss':timeZoneOffset}}</span>
+    </div>
   </div>
   <div>
     <div>
-      <span>Formatted address: </span>{{geoLocation.formattedAddress}}</div>
+      <span class="label">Formatted address: </span>
+      <span>{{geoLocation.formattedAddress}}</span>
+    </div>
     <div>
-      <span>Latitude: </span>{{geoLocation.latitude | dms:'lat'}}</div>
+      <span class="label">Latitude: </span>
+      <span>{{geoLocation.latitude | dms:'lat'}}</span>
+    </div>
     <div>
-      <span>Longitude: </span>{{geoLocation.longitude | dms:'lng'}}</div>
+      <span class="label">Longitude: </span>
+      <span>{{geoLocation.longitude | dms:'lng'}}</span>
+    </div>
   </div>
   <div>
     <div>
-      <span>TimeZone Id: </span>{{timeZone.timeZoneId}}</div>
+      <span class="label">TimeZone Id: </span><span>{{timeZone.timeZoneId}}</span></div>
     <div>
-      <span>TimeZone name: </span>{{timeZone.timeZoneName}}</div>
+      <span class="label">TimeZone name: </span><span>{{timeZone.timeZoneName}}</span></div>
     <div>
-      <span>Raw offset: </span>{{timeZone.rawOffset}}</div>
+      <span class="label">Raw offset: </span><span>{{timeZone.rawOffset}}</span></div>
     <div>
-      <span>DST offset: </span>{{timeZone.dstOffset}}</div>
+      <span class="label">DST offset: </span><span>{{timeZone.dstOffset}}</span></div>
   </div>
   <div>
     <div>
-      <span>Sunrise: </span>{{sunInfo.sunrise}}</div>
+      <span class="label">Sunrise: </span><span>{{sunInfo.sunrise}}</span></div>
     <div>
-      <span>Sunset: </span>{{sunInfo.sunset}}</div>
+      <span class="label">Sunset: </span><span>{{sunInfo.sunset}}</span></div>
     <div>
-      <span>Length of a day: </span>{{sunInfo.duration}}</div>
+      <span class="label">Length of a day: </span><span>{{sunInfo.duration}}</span></div>
   </div>
   <div>
     <div>
-      <span>Moon phase: </span>{{moonPhase}}</div>
+      <span class="label">Moon phase: </span><span>{{moonPhase}}</span></div>
   </div>
 </div>
-<div class="column right">
-  <agm-map [latitude]="geoLocation.latitude" [longitude]="geoLocation.longitude"
-    (mapClick)="onChooseLocation($event)">
+<div class="map">
+  <agm-map [latitude]="geoLocation.latitude" [longitude]="geoLocation.longitude" (mapClick)="onChooseLocation($event)">
     <agm-marker [latitude]="geoLocation.latitude" [longitude]="geoLocation.longitude"></agm-marker>
   </agm-map>
 </div>
