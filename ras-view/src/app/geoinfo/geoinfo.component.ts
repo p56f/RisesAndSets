@@ -31,6 +31,8 @@ export class GeoInfoComponent implements OnInit {
 
   private _moonPhase = '';
 
+  private _mapHeight = 0;
+
   constructor(
     private geoLocationService : GeoLocationService,
     private timeZoneService: TimeZoneService,
@@ -43,6 +45,7 @@ export class GeoInfoComponent implements OnInit {
       latitude: 51.2,
       longitude: 17.5
     };
+    this._mapHeight = Math.floor(0.97 * window.innerHeight);
   }
 
   get address() {
@@ -75,6 +78,10 @@ export class GeoInfoComponent implements OnInit {
 
   get moonPhase() {
     return this._moonPhase;
+  }
+
+  get mapHeight() {
+    return this._mapHeight;
   }
 
   getGeoInfoForAddress() {
