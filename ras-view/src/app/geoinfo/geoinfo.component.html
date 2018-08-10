@@ -1,5 +1,5 @@
 <div>
-  <agm-map [style.height.px]="mapHeight" [latitude]="geoLocation.latitude" [longitude]="geoLocation.longitude" (mapClick)="onChooseLocation($event)">
+  <agm-map [style.height.px]="mapHeight" [latitude]="centerLocation.latitude" [longitude]="centerLocation.longitude" (mapClick)="onChooseLocation($event)">
     <agm-marker [latitude]="geoLocation.latitude" [longitude]="geoLocation.longitude"></agm-marker>
   </agm-map>
 </div>
@@ -33,24 +33,40 @@
   </div>
   <div>
     <div>
-      <span class="label">TimeZone Id: </span><span>{{timeZone.timeZoneId}}</span></div>
+      <span class="label">TimeZone Id: </span>
+      <span>{{timeZone.timeZoneId}}</span>
+    </div>
     <div>
-      <span class="label">TimeZone name: </span><span>{{timeZone.timeZoneName}}</span></div>
+      <span class="label">TimeZone name: </span>
+      <span>{{timeZone.timeZoneName}}</span>
+    </div>
     <div>
-      <span class="label">Raw offset: </span><span>{{timeZone.rawOffset}}</span></div>
+      <span class="label">Raw offset: </span>
+      <span>{{timeZone.rawOffset}}</span>
+    </div>
     <div>
-      <span class="label">DST offset: </span><span>{{timeZone.dstOffset}}</span></div>
+      <span class="label">DST offset: </span>
+      <span>{{timeZone.dstOffset}}</span>
+    </div>
   </div>
   <div>
     <div>
-      <span class="label">Sunrise: </span><span>{{sunInfo.sunrise}}</span></div>
+      <span class="label">Sunrise: </span>
+      <span>{{sunInfo.sunrise}}</span>
+    </div>
     <div>
-      <span class="label">Sunset: </span><span>{{sunInfo.sunset}}</span></div>
+      <span class="label">Sunset: </span>
+      <span>{{sunInfo.sunset}}</span>
+    </div>
     <div>
-      <span class="label">Length of a day: </span><span>{{sunInfo.duration}}</span></div>
+      <span class="label">Length of a day: </span>
+      <span>{{sunInfo.duration}}</span>
+    </div>
   </div>
   <div>
     <div>
-      <span class="label">Moon phase: </span><span>{{moonPhase}}</span></div>
+      <span class="label">Moon phase: </span>
+      <span>{{moonPhase}}</span>
+    </div>
   </div>
 </div>

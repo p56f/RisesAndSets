@@ -21,6 +21,8 @@ export class GeoInfoComponent implements OnInit {
   
   private _geoLocation : GeoLocation;
 
+  private _centerLocation : GeoLocation;
+
   private _timeZone : TimeZone;
 
   private _sunInfo : SunInfo;
@@ -42,8 +44,13 @@ export class GeoInfoComponent implements OnInit {
   ngOnInit() {
     this._geoLocation = {
       formattedAddress: '',
-      latitude: 51.2,
-      longitude: 17.5
+      latitude: 0,
+      longitude: 0
+    };
+    this._centerLocation = {
+      formattedAddress: '',
+      latitude: 51.1,
+      longitude: 17
     };
     this._mapHeight = Math.floor(0.97 * window.innerHeight);
   }
@@ -58,6 +65,10 @@ export class GeoInfoComponent implements OnInit {
 
   get geoLocation() {
     return this._geoLocation;
+  }
+
+  get centerLocation() {
+    return this._centerLocation;
   }
 
   get timeZone() {
@@ -93,6 +104,8 @@ export class GeoInfoComponent implements OnInit {
           latitude: location['lat'],
           longitude: location['lng']
         };
+        this._centerLocation.latitude = this._geoLocation.latitude;
+        this._centerLocation.longitude = this._geoLocation.longitude;
         this.getTimeZone();
       }
     );
