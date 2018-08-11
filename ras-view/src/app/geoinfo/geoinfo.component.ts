@@ -13,7 +13,10 @@ import { MoonService } from '../moon.service';
 @Component({
   selector: 'app-geoInfo',
   templateUrl: './geoinfo.component.html',
-  styleUrls: ['./geoinfo.component.css']
+  styleUrls: ['./geoinfo.component.css'],
+  host: {
+    '(window:resize)': 'onResize($event)'
+  }
 })
 export class GeoInfoComponent implements OnInit {
   
@@ -29,7 +32,7 @@ export class GeoInfoComponent implements OnInit {
 
   private _currentDateTime = new Date();
   
-  private _timeZoneOffset = '+0000';
+  private _timeZoneOffset = '';
 
   private _moonPhase = '';
 
@@ -52,7 +55,8 @@ export class GeoInfoComponent implements OnInit {
       latitude: 51.1,
       longitude: 17
     };
-    this._mapHeight = Math.floor(0.97 * window.innerHeight);
+    this._timeZoneOffset = this.getTimeZoneOffsetFromMinutes(-this._currentDateTime.getTimezoneOffset());
+    this._mapHeight = this.getNormalizedWindowHeight();
   }
 
   get address() {
@@ -124,6 +128,10 @@ export class GeoInfoComponent implements OnInit {
       });
   }
 
+  onResize(event) {
+    this._mapHeight = this.getNormalizedWindowHeight();
+  }
+
   private getTimeZone() {
     this.timeZoneService
       .getTimeZone(this._geoLocation.latitude, this._geoLocation.longitude, this.getCurrentTimestamp())
@@ -188,6 +196,10 @@ export class GeoInfoComponent implements OnInit {
 
   private getTimeZoneOffset() : string {
     const offsetInMinutes = this.getTimeZoneOffsetInSeconds() / 60;
+    return this.getTimeZoneOffsetFromMinutes(offsetInMinutes);
+  }
+
+  private getTimeZoneOffsetFromMinutes(offsetInMinutes: number) : string {
     const hoursPart = Math.floor(offsetInMinutes / 60);
     const hoursPartString = Math.abs(hoursPart).toString().padStart(2, '0');
     const minutesPartString = (offsetInMinutes % 60).toString().padStart(2, '0');
@@ -203,5 +215,9 @@ export class GeoInfoComponent implements OnInit {
 
   private getMoonPhaseName(moonPhase: string) : string {
     return moonPhase.charAt(0) + moonPhase.substr(1).replace(/[A-Z]/, ' $&').toLowerCase();
+  }
+
+  private getNormalizedWindowHeight() {
+    return Math.floor(0.97 * window.innerHeight);
   }
 }
