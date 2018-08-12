@@ -6,8 +6,7 @@ import java.time.{Duration, LocalDate, LocalTime}
 
 import org.springframework.stereotype.Service
 import pl.pecet.risesandsets.beans.DateTimeAndCoordinatesParams
-
-import SunCalculator._
+import pl.pecet.risesandsets.calculators.SunCalculator._
 
 @Service
 class SunCalculator extends Calculator {

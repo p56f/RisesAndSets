@@ -1,15 +1,12 @@
 package pl.pecet.risesandsets.calculators
 
-import java.time.{DateTimeException, LocalTime}
+import java.time.LocalTime
 
 import org.scalatest.FunSuite
 import pl.pecet.risesandsets.beans.DateTimeAndCoordinatesParams
+import pl.pecet.risesandsets.calculators.SunCalculatorTest._
 
 class SunCalculatorTest extends FunSuite {
-
-  private val warsawSummerParams = DateTimeAndCoordinatesParams(latitude = 52.24d, longitude = 21.01d, day = 21, month = 6, year = 2017, timeOffset = 7200)
-
-  private val warsawWinterParams = DateTimeAndCoordinatesParams(latitude = 52.24d, longitude = 21.01d, day = 22, month = 12, year = 2017, timeOffset = 3600)
 
   private val sunCalculator = new SunCalculator()
 
@@ -95,4 +92,11 @@ class SunCalculatorTest extends FunSuite {
     val sunRise = sunCalculator.calculateRise(kirunaWinterParams)
     assert(sunRise.isEmpty)
   }
+}
+
+
+object SunCalculatorTest {
+  private final val warsawSummerParams = DateTimeAndCoordinatesParams(latitude = 52.24d, longitude = 21.01d, day = 21, month = 6, year = 2017, timeOffset = 7200)
+
+  private final val warsawWinterParams = DateTimeAndCoordinatesParams(latitude = 52.24d, longitude = 21.01d, day = 22, month = 12, year = 2017, timeOffset = 3600)
 }

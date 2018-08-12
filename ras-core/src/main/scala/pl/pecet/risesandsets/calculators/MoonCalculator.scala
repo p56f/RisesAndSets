@@ -1,12 +1,11 @@
 package pl.pecet.risesandsets.calculators
-import java.time.temporal.JulianFields
 import java.time._
+import java.time.temporal.JulianFields
 
 import org.springframework.stereotype.Service
 import pl.pecet.risesandsets.beans.DateTimeAndCoordinatesParams
+import pl.pecet.risesandsets.calculators.MoonCalculator._
 import pl.pecet.risesandsets.enums.MoonPhase
-
-import MoonCalculator._
 
 @Service
 class MoonCalculator extends Calculator {
