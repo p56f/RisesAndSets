@@ -11,7 +11,6 @@ case class DateTimeAndCoordinatesParams(
   @BeanProperty var hour: Int = 0,
   @BeanProperty var minute: Int = 0,
   @BeanProperty var second: Int = 0,
-  @BeanProperty var timeOffset: Int = 0,
-  @BeanProperty var timeZoneId: String = "UTC") {
+  @BeanProperty var timeOffset: Int = 0) {
   def this() = this(latitude = 0.0d)
 }

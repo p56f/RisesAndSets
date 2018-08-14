@@ -21,7 +21,7 @@ class MoonCalculator extends Calculator {
   def calculatePhase(parameters: DateTimeAndCoordinatesParams) : MoonPhase.Val = {
     val localDate = LocalDate.of(parameters.year, parameters.month, parameters.day)
     val localTime = LocalTime.of(parameters.hour, parameters.minute, parameters.second)
-    val zonedDate = ZonedDateTime.of(localDate, localTime, ZoneId.of(parameters.timeZoneId))
+    val zonedDate = ZonedDateTime.of(localDate, localTime, ZoneOffset.ofTotalSeconds(parameters.timeOffset))
 
     calculateMoonPhase(zonedDate)
   }

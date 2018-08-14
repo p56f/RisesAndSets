@@ -14,12 +14,12 @@ class MoonCalculatorTest extends FunSuite {
   }
 
   test("First quarter (24/03/2018 22:00 UTC+1)") {
-    val params = DateTimeAndCoordinatesParams(day = 24, month = 3, year = 2018, hour = 22, timeZoneId = "Europe/Warsaw")
+    val params = DateTimeAndCoordinatesParams(day = 24, month = 3, year = 2018, hour = 22, timeOffset = 3600)
     assert(moonCalculator.calculatePhase(params) == MoonPhase.FirstQuarter)
   }
 
   test("Full moon (27/07/2018 23:00 UTC+2)") {
-    val params = DateTimeAndCoordinatesParams(day = 27, month = 7, year = 2018, hour = 23, timeZoneId = "Europe/Warsaw")
+    val params = DateTimeAndCoordinatesParams(day = 27, month = 7, year = 2018, hour = 23, timeOffset = 7200)
     assert(moonCalculator.calculatePhase(params) == MoonPhase.FullMoon)
   }
 
