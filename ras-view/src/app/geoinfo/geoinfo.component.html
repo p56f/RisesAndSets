@@ -5,68 +5,68 @@
 </div>
 <div class="geoInfo">
   <div>
-    <label>Address:
+    <label class="text-standard font-weight-bold small">Address:
       <input [(ngModel)]="address" (keyup.enter)="getGeoInfoForAddress()" placeholder="Address">
-      <button (click)="getGeoInfoForAddress()">Go</button>
+      <button class="btn-primary" (click)="getGeoInfoForAddress()">Go</button>
     </label>
   </div>
   <br/>
   <div>
     <div>
-      <span class="label">Current date and time: </span>
-      <span>{{currentDateTime | date:'dd.MM.yyyy HH:mm:ss':timeZoneOffset}}</span>
+      <span class="text-standard font-weight-bold small">Date and time: </span>
+      <span class="text-standard small">{{currentDateTime | date:'dd.MM.yyyy HH:mm:ss':timeZoneOffset}}</span>
     </div>
   </div>
   <div>
     <div>
-      <span class="label">Formatted address: </span>
-      <span>{{geoLocation.formattedAddress}}</span>
+      <span class="text-standard font-weight-bold small">Formatted address: </span>
+      <span class="text-standard small">{{geoLocation.formattedAddress}}</span>
     </div>
     <div>
-      <span class="label">Latitude: </span>
-      <span>{{geoLocation.latitude | dms:'lat'}}</span>
+      <span class="text-standard font-weight-bold small">Latitude: </span>
+      <span class="text-standard small">{{geoLocation.latitude | dms:'lat'}}</span>
     </div>
     <div>
-      <span class="label">Longitude: </span>
-      <span>{{geoLocation.longitude | dms:'lng'}}</span>
-    </div>
-  </div>
-  <div>
-    <div>
-      <span class="label">TimeZone Id: </span>
-      <span>{{timeZone.timeZoneId}}</span>
-    </div>
-    <div>
-      <span class="label">TimeZone name: </span>
-      <span>{{timeZone.timeZoneName}}</span>
-    </div>
-    <div>
-      <span class="label">Raw offset: </span>
-      <span>{{timeZone.rawOffset | hours}}</span>
-    </div>
-    <div>
-      <span class="label">DST offset: </span>
-      <span>{{timeZone.dstOffset | hours}}</span>
+      <span class="text-standard font-weight-bold small">Longitude: </span>
+      <span class="text-standard small">{{geoLocation.longitude | dms:'lng'}}</span>
     </div>
   </div>
   <div>
     <div>
-      <span class="label">Sunrise: </span>
-      <span>{{sunInfo.sunrise}}</span>
+      <span class="text-standard font-weight-bold small">TimeZone Id: </span>
+      <span class="text-standard small">{{timeZone.timeZoneId}}</span>
     </div>
     <div>
-      <span class="label">Sunset: </span>
-      <span>{{sunInfo.sunset}}</span>
+      <span class="text-standard font-weight-bold small">TimeZone name: </span>
+      <span class="text-standard small">{{timeZone.timeZoneName}}</span>
     </div>
     <div>
-      <span class="label">Length of a day: </span>
-      <span>{{sunInfo.duration}}</span>
+      <span class="text-standard font-weight-bold small">Raw offset: </span>
+      <span class="text-standard small">{{timeZone.rawOffset | hours}}</span>
+    </div>
+    <div>
+      <span class="text-standard font-weight-bold small">DST offset: </span>
+      <span class="text-standard small">{{timeZone.dstOffset | hours}}</span>
     </div>
   </div>
   <div>
     <div>
-      <span class="label">Moon phase: </span>
-      <span>{{moonPhase}}</span>
+      <span class="text-standard font-weight-bold small">Sunrise: </span>
+      <span class="text-standard small">{{sunInfo.sunrise}}</span>
+    </div>
+    <div>
+      <span class="text-standard font-weight-bold small">Sunset: </span>
+      <span class="text-standard small">{{sunInfo.sunset}}</span>
+    </div>
+    <div>
+      <span class="text-standard font-weight-bold small">Length of a day: </span>
+      <span class="text-standard small">{{sunInfo.duration}}</span>
+    </div>
+  </div>
+  <div>
+    <div>
+      <span class="text-standard font-weight-bold small">Moon phase: </span>
+      <span class="text-standard small">{{moonPhase}}</span>
     </div>
   </div>
 </div>

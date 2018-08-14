@@ -10,14 +10,9 @@
 }
 
 div {
+  line-height: 1.2;
+}
+
+.text-standard {
   color: #369;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-span, label {
-    font-size: 80%;
-}
-
-span.label, label {
-    font-weight: bold;
 }

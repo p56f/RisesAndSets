@@ -56,7 +56,7 @@ export class GeoInfoComponent implements OnInit {
       longitude: 17
     };
     this._timeZoneOffset = this.getTimeZoneOffsetFromMinutes(-this._currentDateTime.getTimezoneOffset());
-    this._mapHeight = this.getNormalizedWindowHeight();
+    this._mapHeight = window.innerHeight;
   }
 
   get address() {
@@ -129,7 +129,7 @@ export class GeoInfoComponent implements OnInit {
   }
 
   onResize(event) {
-    this._mapHeight = this.getNormalizedWindowHeight();
+    this._mapHeight = window.innerHeight;
   }
 
   private getTimeZone() {
@@ -215,9 +215,5 @@ export class GeoInfoComponent implements OnInit {
 
   private getMoonPhaseName(moonPhase: string) : string {
     return moonPhase.charAt(0) + moonPhase.substr(1).replace(/[A-Z]/, ' $&').toLowerCase();
-  }
-
-  private getNormalizedWindowHeight() {
-    return Math.floor(0.97 * window.innerHeight);
   }
 }

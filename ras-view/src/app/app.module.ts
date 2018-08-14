@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule }    from '@angular/common/http';
 import { AgmCoreModule } from '@agm/core';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { GeoInfoComponent } from './geoinfo/geoinfo.component';
@@ -25,7 +26,8 @@ import * as apis from '../private/external.apis.json';
     HttpClientModule,
     AgmCoreModule.forRoot({
       apiKey: apis['googleAPIs']['key']
-    })
+    }),
+    NgbModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
