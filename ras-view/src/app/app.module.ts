@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { GeoInfoComponent } from './geoinfo/geoinfo.component';
 
 import { DmsPipe } from './dms.pipe';
+import { HoursPipe } from './hours.pipe';
 
 import * as apis from '../private/external.apis.json';
 
@@ -15,7 +16,8 @@ import * as apis from '../private/external.apis.json';
   declarations: [
     AppComponent,
     GeoInfoComponent,
-    DmsPipe
+    DmsPipe,
+    HoursPipe
   ],
   imports: [
     BrowserModule,
