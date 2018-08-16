@@ -4,17 +4,26 @@
   </agm-map>
 </div>
 <div class="geoInfo">
-  <div>
-    <label class="text-standard font-weight-bold small">Address:
-      <input [(ngModel)]="address" (keyup.enter)="getGeoInfoForAddress()" placeholder="Address">
-      <button class="btn-primary" (click)="getGeoInfoForAddress()">Go</button>
-    </label>
+  <div class="input-group input-group-sm mb-3">
+    <input type="text" class="form-control" placeholder="Date: yyyy-mm-dd" aria-label="Date" aria-describedby="basic-addon2"
+      ngbDatepicker #d="ngbDatepicker" [(ngModel)]="selectedDate" 
+      [minDate]="{year: 1980, month: 1, day: 1}" [maxDate]="{year: 2030, month: 12, day: 31}">
+    <div class="input-group-append">
+      <button class="btn btn-sm btn-outline-primary" type="button" (click)="d.toggle()">Select</button>
+    </div>
   </div>
-  <br/>
+  <div class="input-group input-group-sm mb-3">
+    <input type="text" class="form-control" placeholder="Address" aria-label="Address" aria-describedby="basic-addon2" [(ngModel)]="address"
+      (keyup.enter)="getGeoInfoForAddress()">
+    <div class="input-group-append">
+      <button class="btn btn-sm btn-outline-primary" type="button" (click)="getGeoInfoForAddress()">Go</button>
+    </div>
+  </div>
+  <hr/>
   <div>
     <div>
       <span class="text-standard font-weight-bold small">Date and time: </span>
-      <span class="text-standard small">{{currentDateTime | date:'dd.MM.yyyy HH:mm:ss':timeZoneOffset}}</span>
+      <span class="text-standard small">{{dateTime | date:'dd.MM.yyyy HH:mm:ss':timeZoneOffset}}</span>
     </div>
   </div>
   <div>

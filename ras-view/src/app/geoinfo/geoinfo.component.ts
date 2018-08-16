@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+
 import { GeoLocation } from '../geolocation';
 import { GeoLocationService } from '../geolocation.service';
 
@@ -20,6 +22,8 @@ import { MoonService } from '../moon.service';
 })
 export class GeoInfoComponent implements OnInit {
   
+  private _selectedDate: NgbDateStruct;
+
   private _address = '';
   
   private _geoLocation : GeoLocation;
@@ -30,7 +34,7 @@ export class GeoInfoComponent implements OnInit {
 
   private _sunInfo : SunInfo;
 
-  private _currentDateTime = new Date();
+  private _dateTime = new Date();
   
   private _timeZoneOffset = '';
 
@@ -55,8 +59,16 @@ export class GeoInfoComponent implements OnInit {
       latitude: 51.1,
       longitude: 17
     };
-    this._timeZoneOffset = this.getTimeZoneOffsetFromMinutes(-this._currentDateTime.getTimezoneOffset());
+    this._timeZoneOffset = this.getTimeZoneOffsetFromMinutes(-this._dateTime.getTimezoneOffset());
     this._mapHeight = window.innerHeight;
+  }
+
+  get selectedDate() {
+    return this._selectedDate;
+  }
+
+  set selectedDate(selectedDate: NgbDateStruct) {
+    this._selectedDate = selectedDate;
   }
 
   get address() {
@@ -83,8 +95,8 @@ export class GeoInfoComponent implements OnInit {
     return this._sunInfo;
   }
 
-  get currentDateTime() {
-    return this._currentDateTime;
+  get dateTime() {
+    return this._dateTime;
   }
 
   get timeZoneOffset() {
@@ -133,11 +145,11 @@ export class GeoInfoComponent implements OnInit {
   }
 
   private getTimeZone() {
+    this._dateTime = this.getDateAndTime();
     this.timeZoneService
-      .getTimeZone(this._geoLocation.latitude, this._geoLocation.longitude, this.getCurrentTimestamp())
+      .getTimeZone(this._geoLocation.latitude, this._geoLocation.longitude, this.getTimestamp())
       .subscribe( tz => {
         this._timeZone = tz;
-        this._currentDateTime = new Date();
         this._timeZoneOffset = this.getTimeZoneOffset();
         this.getSunInfo();
         this.getMoonPhase();
@@ -146,7 +158,7 @@ export class GeoInfoComponent implements OnInit {
 
   private getSunInfo() {
     this.sunService
-      .getSunInfo(this._geoLocation.latitude, this._geoLocation.longitude, this._currentDateTime, this.getTimeZoneOffsetInSeconds())
+      .getSunInfo(this._geoLocation.latitude, this._geoLocation.longitude, this._dateTime, this.getTimeZoneOffsetInSeconds())
       .subscribe( data => {
         const polarDay = data['polarDay'];
         const polarNight = data['polarNight'];
@@ -180,14 +192,21 @@ export class GeoInfoComponent implements OnInit {
 
   private getMoonPhase() {
     this.moonService
-      .getMoonInfo(this._currentDateTime, this._timeZone.timeZoneId)
+      .getMoonInfo(this._dateTime, this._timeZone.timeZoneId)
       .subscribe( data => {
         this._moonPhase = this.getMoonPhaseName(data['phase']);
       });
   }
 
-  private getCurrentTimestamp() : number {
-    return Math.round(this._currentDateTime.getTime() / 1000);
+  private getDateAndTime() : Date {
+    if (typeof this._selectedDate === 'undefined') {
+      return new Date();
+    }
+    return new Date(this._selectedDate.year, this.selectedDate.month - 1, this._selectedDate.day);
+  }
+
+  private getTimestamp() : number {
+    return Math.round(this._dateTime.getTime() / 1000);
   }
 
   private getTimeZoneOffsetInSeconds() : number {
