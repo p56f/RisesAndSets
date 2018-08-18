@@ -25,6 +25,8 @@ export class GeoInfoComponent implements OnInit {
   
   private _selectedDate: NgbDateStruct;
 
+  private _selectedTime: string;
+
   private _address = '';
   
   private _geoLocation : GeoLocation;
@@ -70,6 +72,14 @@ export class GeoInfoComponent implements OnInit {
 
   set selectedDate(selectedDate: NgbDateStruct) {
     this._selectedDate = selectedDate;
+  }
+
+  get selectedTime() {
+    return this._selectedTime;
+  }
+
+  set selectedTime(selectedTime: string) {
+    this._selectedTime = selectedTime;
   }
 
   get address() {
@@ -200,15 +210,22 @@ export class GeoInfoComponent implements OnInit {
   }
 
   private getDateAndTime() : Date {
-    if (this.isWrongDate(this._selectedDate)) {
+    if (this.isWrongDate(this._selectedDate) || this.isWrongTime(this._selectedTime)) {
       return new Date();
     }
-    return new Date(this._selectedDate.year, this.selectedDate.month - 1, this._selectedDate.day);
+    const hoursAndMinutes = this._selectedTime.split(':');
+    const hours = +hoursAndMinutes[0];
+    const minutes = +hoursAndMinutes[1];
+    return new Date(this._selectedDate.year, this.selectedDate.month - 1, this._selectedDate.day, hours, minutes);
   }
 
   private isWrongDate(date: NgbDateStruct) : boolean {
-    return isUndefined(this._selectedDate) || isUndefined(this._selectedDate.day) ||
-      isUndefined(this._selectedDate.month) || isUndefined(this._selectedDate.year);
+    return isUndefined(date) || isUndefined(date.day) || isUndefined(date.month) || isUndefined(date.year);
+  }
+
+  private isWrongTime(time: string) : boolean {
+    const timeRegex = new RegExp('^(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$');
+    return !timeRegex.test(time);
   }
 
   private getTimestamp() : number {
