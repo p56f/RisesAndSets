@@ -5,8 +5,8 @@
 </div>
 <div class="geoInfo">
   <div class="input-group input-group-sm mb-3">
-    <input type="text" class="form-control" placeholder="Date: yyyy-mm-dd" aria-label="Date" aria-describedby="basic-addon2"
-      ngbDatepicker #d="ngbDatepicker" [(ngModel)]="selectedDate" 
+    <input type="text" class="form-control" placeholder="Date: yyyy-mm-dd" aria-label="Date" 
+      aria-describedby="basic-addon2" ngbDatepicker #d="ngbDatepicker" [(ngModel)]="selectedDate" 
       [minDate]="{year: 1980, month: 1, day: 1}" [maxDate]="{year: 2030, month: 12, day: 31}">
     <div class="input-group-append">
       <button class="btn btn-sm btn-outline-primary" type="button" (click)="d.toggle()">Select</button>

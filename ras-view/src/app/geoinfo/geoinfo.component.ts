@@ -11,6 +11,7 @@ import { TimeZoneService } from '../timezone.service';
 import { SunInfo } from '../suninfo';
 import { SunService } from '../sun.service';
 import { MoonService } from '../moon.service';
+import { isUndefined } from 'util';
 
 @Component({
   selector: 'app-geoInfo',
@@ -199,10 +200,15 @@ export class GeoInfoComponent implements OnInit {
   }
 
   private getDateAndTime() : Date {
-    if (typeof this._selectedDate === 'undefined') {
+    if (this.isWrongDate(this._selectedDate)) {
       return new Date();
     }
     return new Date(this._selectedDate.year, this.selectedDate.month - 1, this._selectedDate.day);
+  }
+
+  private isWrongDate(date: NgbDateStruct) : boolean {
+    return isUndefined(this._selectedDate) || isUndefined(this._selectedDate.day) ||
+      isUndefined(this._selectedDate.month) || isUndefined(this._selectedDate.year);
   }
 
   private getTimestamp() : number {
