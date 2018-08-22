@@ -210,12 +210,16 @@ export class GeoInfoComponent implements OnInit {
   }
 
   private getDateAndTime() : Date {
-    if (this.isWrongDate(this._selectedDate) || this.isWrongTime(this._selectedTime)) {
+    if (this.isWrongDate(this._selectedDate)) {
       return new Date();
     }
-    const hoursAndMinutes = this._selectedTime.split(':');
-    const hours = +hoursAndMinutes[0];
-    const minutes = +hoursAndMinutes[1];
+    let hours = 0;
+    let minutes = 0;
+    if (this.isProperTime(this._selectedTime)) {
+      const hoursAndMinutes = this._selectedTime.split(':');
+      hours = +hoursAndMinutes[0];
+      minutes = +hoursAndMinutes[1];
+    } 
     return new Date(this._selectedDate.year, this.selectedDate.month - 1, this._selectedDate.day, hours, minutes);
   }
 
@@ -223,9 +227,9 @@ export class GeoInfoComponent implements OnInit {
     return isUndefined(date) || isUndefined(date.day) || isUndefined(date.month) || isUndefined(date.year);
   }
 
-  private isWrongTime(time: string) : boolean {
+  private isProperTime(time: string) : boolean {
     const timeRegex = new RegExp('^(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$');
-    return !timeRegex.test(time);
+    return timeRegex.test(time);
   }
 
   private getTimestamp() : number {
