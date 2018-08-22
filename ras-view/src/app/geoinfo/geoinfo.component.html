@@ -5,14 +5,6 @@
 </div>
 <div class="geoInfo">
   <div class="input-group input-group-sm mb-3">
-    <input type="text" class="form-control" placeholder="Date: dd.mm.yyyy" ngbDatepicker #d="ngbDatepicker" [(ngModel)]="selectedDate" 
-      [minDate]="{year: 1980, month: 1, day: 1}" [maxDate]="{year: 2060, month: 12, day: 31}" />
-    <input type="text" class="form-control" placeholder="Time: HH:MM" [(ngModel)]="selectedTime" />
-    <div class="input-group-append">
-      <button class="btn btn-sm btn-outline-primary" type="button" (click)="d.toggle()">Select</button>
-    </div>
-  </div>
-  <div class="input-group input-group-sm mb-3">
     <input type="text" class="form-control" placeholder="Address" aria-label="Address" aria-describedby="basic-addon2" [(ngModel)]="address"
       (keyup.enter)="getGeoInfoForAddress()">
     <div class="input-group-append">
@@ -24,6 +16,8 @@
     <div>
       <span class="text-standard font-weight-bold small">Date and time: </span>
       <span class="text-standard small">{{dateTime | date:'dd.MM.yyyy HH:mm:ss':timeZoneOffset}}</span>
+      <span class="empty"></span>
+      <a href="#" class="text-primary small" (click)="openChangeDateDialog()">Change</a>
     </div>
   </div>
   <div>

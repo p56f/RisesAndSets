@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateStruct, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
+import { DateChangeDialogComponent } from '../datechangedialog/datechangedialog.component';
 
 import { GeoLocation } from '../geolocation';
 import { GeoLocationService } from '../geolocation.service';
@@ -49,7 +51,8 @@ export class GeoInfoComponent implements OnInit {
     private geoLocationService : GeoLocationService,
     private timeZoneService: TimeZoneService,
     private sunService: SunService, 
-    private moonService: MoonService) { }
+    private moonService: MoonService,
+    private modalService: NgbModal) { }
 
   ngOnInit() {
     this._geoLocation = {
@@ -153,6 +156,10 @@ export class GeoInfoComponent implements OnInit {
 
   onResize(event) {
     this._mapHeight = window.innerHeight;
+  }
+
+  openChangeDateDialog() {
+    this.modalService.open(DateChangeDialogComponent);
   }
 
   private getTimeZone() {

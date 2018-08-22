@@ -7,6 +7,7 @@ import { NgbModule, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { GeoInfoComponent } from './geoinfo/geoinfo.component';
+import { DateChangeDialogComponent } from './datechangedialog/datechangedialog.component';
 
 import { NgbDatePLParserFormatter } from './ngb-date-plparser-formatter';
 
@@ -19,6 +20,7 @@ import * as apis from '../private/external.apis.json';
   declarations: [
     AppComponent,
     GeoInfoComponent,
+    DateChangeDialogComponent,
     DmsPipe,
     HoursPipe
   ],
@@ -31,6 +33,7 @@ import * as apis from '../private/external.apis.json';
     }),
     NgbModule.forRoot()
   ],
+  entryComponents: [DateChangeDialogComponent],
   providers: [{provide: NgbDateParserFormatter, useClass: NgbDatePLParserFormatter}],
   bootstrap: [AppComponent]
 })
