@@ -10,7 +10,7 @@ export class NgbDatePLParserFormatter extends NgbDateParserFormatter {
     parse(value: string): NgbDateStruct {
         if (value) {
             const dateAsMoment = moment(value, this.dateFormat);
-            if (dateAsMoment.isValid()) { 
+            if (dateAsMoment.isValid() && this.isYearInRange(dateAsMoment, 1980, 2060)) { 
                 return {
                     day: dateAsMoment.date(),
                     month: dateAsMoment.month() + 1,
@@ -33,5 +33,10 @@ export class NgbDatePLParserFormatter extends NgbDateParserFormatter {
       }
 
       return null;
+    }
+
+    private isYearInRange(date: moment.Moment, start: number, end: number) {
+        const year = date.year();
+        return year >= start && year <= end;    
     }
 }
