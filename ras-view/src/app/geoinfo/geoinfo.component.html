@@ -1,6 +1,6 @@
 <div>
   <agm-map [style.height.px]="mapHeight" [latitude]="centerLocation.latitude" [longitude]="centerLocation.longitude" (mapClick)="onChooseLocation($event)">
-    <agm-marker [latitude]="geoLocation.latitude" [longitude]="geoLocation.longitude"></agm-marker>
+    <agm-marker *ngIf="geoLocation" [latitude]="geoLocation.latitude" [longitude]="geoLocation.longitude"></agm-marker>
   </agm-map>
 </div>
 <div class="geoInfo">
@@ -23,47 +23,47 @@
   <div>
     <div>
       <span class="text-standard font-weight-bold small">Formatted address: </span>
-      <span class="text-standard small">{{geoLocation.formattedAddress}}</span>
+      <span *ngIf="geoLocation" class="text-standard small">{{geoLocation.formattedAddress}}</span>
     </div>
     <div>
       <span class="text-standard font-weight-bold small">Latitude: </span>
-      <span class="text-standard small">{{geoLocation.latitude | dms:'lat'}}</span>
+      <span *ngIf="geoLocation" class="text-standard small">{{geoLocation.latitude | dms:'lat'}}</span>
     </div>
     <div>
       <span class="text-standard font-weight-bold small">Longitude: </span>
-      <span class="text-standard small">{{geoLocation.longitude | dms:'lng'}}</span>
+      <span *ngIf="geoLocation" class="text-standard small">{{geoLocation.longitude | dms:'lng'}}</span>
     </div>
   </div>
   <div>
     <div>
       <span class="text-standard font-weight-bold small">TimeZone Id: </span>
-      <span class="text-standard small">{{timeZone.timeZoneId}}</span>
+      <span *ngIf="timeZone" class="text-standard small">{{timeZone.timeZoneId}}</span>
     </div>
     <div>
       <span class="text-standard font-weight-bold small">TimeZone name: </span>
-      <span class="text-standard small">{{timeZone.timeZoneName}}</span>
+      <span *ngIf="timeZone" class="text-standard small">{{timeZone.timeZoneName}}</span>
     </div>
     <div>
       <span class="text-standard font-weight-bold small">Raw offset: </span>
-      <span class="text-standard small">{{timeZone.rawOffset | hours}}</span>
+      <span *ngIf="timeZone" class="text-standard small">{{timeZone.rawOffset | hours}}</span>
     </div>
     <div>
       <span class="text-standard font-weight-bold small">DST offset: </span>
-      <span class="text-standard small">{{timeZone.dstOffset | hours}}</span>
+      <span *ngIf="timeZone" class="text-standard small">{{timeZone.dstOffset | hours}}</span>
     </div>
   </div>
   <div>
     <div>
       <span class="text-standard font-weight-bold small">Sunrise: </span>
-      <span class="text-standard small">{{sunInfo.sunrise}}</span>
+      <span *ngIf="sunInfo" class="text-standard small">{{sunInfo.sunrise}}</span>
     </div>
     <div>
       <span class="text-standard font-weight-bold small">Sunset: </span>
-      <span class="text-standard small">{{sunInfo.sunset}}</span>
+      <span *ngIf="sunInfo" class="text-standard small">{{sunInfo.sunset}}</span>
     </div>
     <div>
       <span class="text-standard font-weight-bold small">Length of a day: </span>
-      <span class="text-standard small">{{sunInfo.duration}}</span>
+      <span *ngIf="sunInfo" class="text-standard small">{{sunInfo.duration}}</span>
     </div>
   </div>
   <div>

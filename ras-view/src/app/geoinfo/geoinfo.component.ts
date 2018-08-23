@@ -55,13 +55,8 @@ export class GeoInfoComponent implements OnInit {
     private modalService: NgbModal) { }
 
   ngOnInit() {
-    this._geoLocation = {
-      formattedAddress: '',
-      latitude: 0,
-      longitude: 0
-    };
     this._centerLocation = {
-      formattedAddress: '',
+      formattedAddress: undefined,
       latitude: 51.1,
       longitude: 17
     };
@@ -143,9 +138,11 @@ export class GeoInfoComponent implements OnInit {
 
   onChooseLocation(event) {
     this._address = '';
-    this._geoLocation.latitude = event.coords.lat;
-    this._geoLocation.longitude = event.coords.lng;
-
+    this._geoLocation = {
+      formattedAddress: undefined,
+      latitude: event.coords.lat,
+      longitude: event.coords.lng
+    };
     this.geoLocationService
       .getFormattedAddress(this._geoLocation.latitude, this._geoLocation.longitude)
       .subscribe( data => {
