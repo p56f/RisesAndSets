@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { NgbDateStruct, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateStruct, NgbModal, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 
 import { DateChangeDialogComponent } from '../datechangedialog/datechangedialog.component';
 
@@ -13,7 +13,6 @@ import { TimeZoneService } from '../timezone.service';
 import { SunInfo } from '../suninfo';
 import { SunService } from '../sun.service';
 import { MoonService } from '../moon.service';
-import { isUndefined } from 'util';
 
 @Component({
   selector: 'app-geoInfo',
@@ -25,10 +24,6 @@ import { isUndefined } from 'util';
 })
 export class GeoInfoComponent implements OnInit {
   
-  private _selectedDate: NgbDateStruct;
-
-  private _selectedTime: string;
-
   private _address = '';
   
   private _geoLocation : GeoLocation;
@@ -62,22 +57,6 @@ export class GeoInfoComponent implements OnInit {
     };
     this._timeZoneOffset = this.getTimeZoneOffsetFromMinutes(-this._dateTime.getTimezoneOffset());
     this._mapHeight = window.innerHeight;
-  }
-
-  get selectedDate() {
-    return this._selectedDate;
-  }
-
-  set selectedDate(selectedDate: NgbDateStruct) {
-    this._selectedDate = selectedDate;
-  }
-
-  get selectedTime() {
-    return this._selectedTime;
-  }
-
-  set selectedTime(selectedTime: string) {
-    this._selectedTime = selectedTime;
   }
 
   get address() {
@@ -156,11 +135,15 @@ export class GeoInfoComponent implements OnInit {
   }
 
   openChangeDateDialog() {
-    this.modalService.open(DateChangeDialogComponent);
+    const modalRef = this.modalService.open(DateChangeDialogComponent);
+    const componentInstance = modalRef.componentInstance;
+    componentInstance.parentDate = this._dateTime;
+    modalRef.result.then(result => {
+      this._dateTime = this.getDateAndTime(componentInstance.dateModel, componentInstance.timeModel);
+    }, reason => {});
   }
 
   private getTimeZone() {
-    this._dateTime = this.getDateAndTime();
     this.timeZoneService
       .getTimeZone(this._geoLocation.latitude, this._geoLocation.longitude, this.getTimestamp())
       .subscribe( tz => {
@@ -213,27 +196,11 @@ export class GeoInfoComponent implements OnInit {
       });
   }
 
-  private getDateAndTime() : Date {
-    if (this.isWrongDate(this._selectedDate)) {
-      return new Date();
+  private getDateAndTime(selectedDate: NgbDateStruct, selectedTime: NgbTimeStruct) : Date {
+    if (selectedDate && selectedTime) {
+      return new Date(selectedDate.year, selectedDate.month - 1, selectedDate.day, selectedTime.hour, selectedTime.minute);
     }
-    let hours = 0;
-    let minutes = 0;
-    if (this.isProperTime(this._selectedTime)) {
-      const hoursAndMinutes = this._selectedTime.split(':');
-      hours = +hoursAndMinutes[0];
-      minutes = +hoursAndMinutes[1];
-    } 
-    return new Date(this._selectedDate.year, this.selectedDate.month - 1, this._selectedDate.day, hours, minutes);
-  }
-
-  private isWrongDate(date: NgbDateStruct) : boolean {
-    return isUndefined(date) || isUndefined(date.day) || isUndefined(date.month) || isUndefined(date.year);
-  }
-
-  private isProperTime(time: string) : boolean {
-    const timeRegex = new RegExp('^(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$');
-    return timeRegex.test(time);
+    return new Date();
   }
 
   private getTimestamp() : number {

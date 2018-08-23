@@ -9,7 +9,8 @@
     <div class="form-group">
       <label class="text-standard" for="selectedDate">Select date and time:</label>
       <div class="input-group">
-        <input id="selectedDate" class="form-control" placeholder="dd.mm.yyyy" name="dp" ngbDatepicker #dp="ngbDatepicker">
+        <input id="selectedDate" class="form-control" placeholder="dd.mm.yyyy" 
+          name="dp" ngbDatepicker #dp="ngbDatepicker" [(ngModel)]="dateModel">
         <div class="input-group-append">
           <button class="btn btn-outline-primary" (click)="dp.toggle()" type="button">
             Select
@@ -18,6 +19,7 @@
       </div>
     </div>
   </form>
+  <ngb-timepicker [(ngModel)]="timeModel"></ngb-timepicker>
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-outline-primary" (click)="activeModal.close('Close click')">Save</button>
