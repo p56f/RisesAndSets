@@ -35,6 +35,10 @@ export class GeoInfoComponent implements OnInit {
   private _sunInfo : SunInfo;
 
   private _dateTime = new Date();
+
+  private _selectedDate: NgbDateStruct;
+  
+  private _selectedTime: NgbTimeStruct;
   
   private _timeZoneOffset = '';
 
@@ -138,12 +142,21 @@ export class GeoInfoComponent implements OnInit {
     const modalRef = this.modalService.open(DateChangeDialogComponent);
     const componentInstance = modalRef.componentInstance;
     componentInstance.parentDate = this._dateTime;
-    modalRef.result.then(result => {
-      this._dateTime = this.getDateAndTime(componentInstance.dateModel, componentInstance.timeModel);
-    }, reason => {});
+    modalRef.result.then(_ => {
+      this._selectedDate = componentInstance.dateModel;
+      this._selectedTime = componentInstance.timeModel;
+      this.getTimeZone();
+    }, _ => {});
+  }
+
+  changeDateToNow() {
+    this._selectedDate = undefined;
+    this._selectedTime = undefined;
+    this.getTimeZone();
   }
 
   private getTimeZone() {
+    this._dateTime = this.getDateAndTime();
     this.timeZoneService
       .getTimeZone(this._geoLocation.latitude, this._geoLocation.longitude, this.getTimestamp())
       .subscribe( tz => {
@@ -196,9 +209,10 @@ export class GeoInfoComponent implements OnInit {
       });
   }
 
-  private getDateAndTime(selectedDate: NgbDateStruct, selectedTime: NgbTimeStruct) : Date {
-    if (selectedDate && selectedTime) {
-      return new Date(selectedDate.year, selectedDate.month - 1, selectedDate.day, selectedTime.hour, selectedTime.minute);
+  private getDateAndTime() : Date {
+    if (this._selectedDate && this._selectedTime) {
+      return new Date(this._selectedDate.year, this._selectedDate.month - 1, this._selectedDate.day, 
+        this._selectedTime.hour, this._selectedTime.minute);
     }
     return new Date();
   }

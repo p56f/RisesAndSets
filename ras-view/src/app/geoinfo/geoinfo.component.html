@@ -18,6 +18,8 @@
       <span class="text-standard small">{{dateTime | date:'dd.MM.yyyy HH:mm:ss':timeZoneOffset}}</span>
       <span class="empty"></span>
       <a href="#" class="text-primary small" (click)="openChangeDateDialog()">Change</a>
+      <span class="text-standard small">&nbsp;|&nbsp;</span>
+      <a href="#" class="text-primary small" (click)="changeDateToNow()">Now</a>
     </div>
   </div>
   <div>
