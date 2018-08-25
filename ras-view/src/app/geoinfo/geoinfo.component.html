@@ -3,7 +3,7 @@
     <agm-marker *ngIf="geoLocation" [latitude]="geoLocation.latitude" [longitude]="geoLocation.longitude"></agm-marker>
   </agm-map>
 </div>
-<div class="geoInfo">
+<div class="geoInfo" ngDraggable>
   <div class="input-group input-group-sm mb-3">
     <input type="text" class="form-control" placeholder="Address" aria-label="Address" aria-describedby="basic-addon2" [(ngModel)]="address"
       (keyup.enter)="getGeoInfoForAddress()">
