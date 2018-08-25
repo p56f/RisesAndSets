@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { NgbDateStruct, NgbModal, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 
+import * as moment from 'moment-timezone';
+
 import { DateChangeDialogComponent } from '../datechangedialog/datechangedialog.component';
 
 import { GeoLocation } from '../geolocation';
@@ -141,7 +143,8 @@ export class GeoInfoComponent implements OnInit {
   openChangeDateDialog() {
     const modalRef = this.modalService.open(DateChangeDialogComponent);
     const componentInstance = modalRef.componentInstance;
-    componentInstance.parentDate = this._dateTime;
+    componentInstance.parentDate = (this._timeZone) ? moment.tz(this._dateTime, this._timeZone.timeZoneId) 
+      : moment(this._dateTime);
     modalRef.result.then(_ => {
       this._selectedDate = componentInstance.dateModel;
       this._selectedTime = componentInstance.timeModel;
@@ -211,8 +214,15 @@ export class GeoInfoComponent implements OnInit {
 
   private getDateAndTime() : Date {
     if (this._selectedDate && this._selectedTime) {
-      return new Date(this._selectedDate.year, this._selectedDate.month - 1, this._selectedDate.day, 
-        this._selectedTime.hour, this._selectedTime.minute);
+      const baseMoment = moment({
+        year: this._selectedDate.year,
+        month: this._selectedDate.month - 1, 
+        date: this._selectedDate.day, 
+        hours: this._selectedTime.hour, 
+        minutes: this._selectedTime.minute
+      });
+      const m = (this._timeZone) ? moment.tz(baseMoment.format('YYYY-MM-DD HH:mm'), this._timeZone.timeZoneId) : baseMoment;
+      return m.toDate();
     }
     return new Date();
   }

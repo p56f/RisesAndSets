@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 
 import { NgbDateStruct, NgbTimeStruct, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
+import { Moment } from 'moment';
+
 @Component({
   selector: 'app-dateChangeDialog',
   templateUrl: './datechangedialog.component.html',
@@ -10,7 +12,7 @@ import { NgbDateStruct, NgbTimeStruct, NgbActiveModal } from '@ng-bootstrap/ng-b
 export class DateChangeDialogComponent implements OnInit {
   
   @Input()
-  parentDate: Date;
+  parentDate: Moment;
 
   dateModel: NgbDateStruct;
   
@@ -20,14 +22,14 @@ export class DateChangeDialogComponent implements OnInit {
 
   ngOnInit() {
     this.dateModel = {
-      day: this.parentDate.getDate(),
-      month: this.parentDate.getMonth() + 1,
-      year: this.parentDate.getFullYear()
+      day: this.parentDate.date(),
+      month: this.parentDate.month() + 1,
+      year: this.parentDate.year()
     };
     this.timeModel = {
-      hour: this.parentDate.getHours(),
-      minute: this.parentDate.getMinutes(),
-      second: this.parentDate.getSeconds()
+      hour: this.parentDate.hours(),
+      minute: this.parentDate.minutes(),
+      second: this.parentDate.seconds()
     }
   }
 }
