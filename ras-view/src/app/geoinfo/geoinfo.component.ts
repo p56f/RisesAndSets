@@ -160,7 +160,8 @@ export class GeoInfoComponent implements OnInit {
 
   private getTimeZone() {
     this._dateTime = this.getDateAndTime();
-    this.timeZoneService
+    if (this._geoLocation) {
+      this.timeZoneService
       .getTimeZone(this._geoLocation.latitude, this._geoLocation.longitude, this.getTimestamp())
       .subscribe( tz => {
         this._timeZone = tz;
@@ -168,6 +169,9 @@ export class GeoInfoComponent implements OnInit {
         this.getSunInfo();
         this.getMoonPhase();
       });
+    } else {
+      this._timeZoneOffset = this.getTimeZoneOffsetFromMinutes(-this._dateTime.getTimezoneOffset());
+    }
   }
 
   private getSunInfo() {
