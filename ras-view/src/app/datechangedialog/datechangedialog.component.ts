@@ -18,7 +18,11 @@ export class DateChangeDialogComponent implements OnInit {
   
   timeModel: NgbTimeStruct;
 
-  constructor(private activeModal: NgbActiveModal) {}
+  constructor(private _activeModal: NgbActiveModal) {}
+
+  get activeModal() {
+    return this._activeModal;
+  }
 
   ngOnInit() {
     this.dateModel = {
