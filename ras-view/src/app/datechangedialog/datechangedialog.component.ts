@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 import { NgbDateStruct, NgbTimeStruct, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 
 import { Moment } from 'moment';
 
@@ -22,6 +23,10 @@ export class DateChangeDialogComponent implements OnInit {
 
   get activeModal() {
     return this._activeModal;
+  }
+
+  get calendarIcon() {
+    return faCalendarAlt;
   }
 
   ngOnInit() {

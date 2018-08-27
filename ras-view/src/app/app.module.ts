@@ -5,6 +5,7 @@ import { HttpClientModule }    from '@angular/common/http';
 import { AgmCoreModule } from '@agm/core';
 import { NgbModule, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { AngularDraggableModule } from 'angular2-draggable';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { AppComponent } from './app.component';
 import { GeoInfoComponent } from './geoinfo/geoinfo.component';
@@ -33,7 +34,8 @@ import * as apis from '../private/external.apis.json';
       apiKey: apis['googleAPIs']['key']
     }),
     NgbModule.forRoot(),
-    AngularDraggableModule
+    AngularDraggableModule,
+    FontAwesomeModule
   ],
   entryComponents: [DateChangeDialogComponent],
   providers: [{provide: NgbDateParserFormatter, useClass: NgbDatePLParserFormatter}],

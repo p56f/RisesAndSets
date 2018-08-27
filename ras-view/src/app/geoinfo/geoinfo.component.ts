@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { NgbDateStruct, NgbModal, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 import * as moment from 'moment-timezone';
 
@@ -103,6 +104,10 @@ export class GeoInfoComponent implements OnInit {
 
   get mapHeight() {
     return this._mapHeight;
+  }
+
+  get searchIcon() {
+    return faSearch;
   }
 
   getGeoInfoForAddress() {

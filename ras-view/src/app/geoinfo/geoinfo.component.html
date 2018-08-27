@@ -8,7 +8,9 @@
     <input type="text" class="form-control" placeholder="Address" aria-label="Address" aria-describedby="basic-addon2" [(ngModel)]="address"
       (keyup.enter)="getGeoInfoForAddress()">
     <div class="input-group-append">
-      <button class="btn btn-sm btn-outline-primary" type="button" (click)="getGeoInfoForAddress()">Go</button>
+      <button class="btn btn-sm btn-outline-primary" type="button" (click)="getGeoInfoForAddress()">
+        <fa-icon [icon]="searchIcon"></fa-icon>
+      </button>
     </div>
   </div>
   <hr/>
