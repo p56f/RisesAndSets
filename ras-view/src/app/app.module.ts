@@ -6,6 +6,7 @@ import { AgmCoreModule } from '@agm/core';
 import { NgbModule, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { AngularDraggableModule } from 'angular2-draggable';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 import { AppComponent } from './app.component';
 import { GeoInfoComponent } from './geoinfo/geoinfo.component';
@@ -35,7 +36,8 @@ import * as apis from '../private/external.apis.json';
     }),
     NgbModule.forRoot(),
     AngularDraggableModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    NgxSpinnerModule
   ],
   entryComponents: [DateChangeDialogComponent],
   providers: [{provide: NgbDateParserFormatter, useClass: NgbDatePLParserFormatter}],

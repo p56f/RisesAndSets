@@ -13,6 +13,7 @@ import { GeoLocationService } from '../geolocation.service';
 import { TimeZone } from '../timezone';
 import { TimeZoneService } from '../timezone.service';
 
+import { NgxSpinnerService } from 'ngx-spinner';
 import { SunInfo } from '../suninfo';
 import { SunService } from '../sun.service';
 import { MoonService } from '../moon.service';
@@ -22,7 +23,7 @@ import { MoonService } from '../moon.service';
   templateUrl: './geoinfo.component.html',
   styleUrls: ['./geoinfo.component.css'],
   host: {
-    '(window:resize)': 'onResize($event)'
+    '(window:resize)': 'onResize()'
   }
 })
 export class GeoInfoComponent implements OnInit {
@@ -54,7 +55,8 @@ export class GeoInfoComponent implements OnInit {
     private timeZoneService: TimeZoneService,
     private sunService: SunService, 
     private moonService: MoonService,
-    private modalService: NgbModal) { }
+    private modalService: NgbModal,
+    private spinnerService: NgxSpinnerService) { }
 
   ngOnInit() {
     this._centerLocation = {
@@ -111,6 +113,7 @@ export class GeoInfoComponent implements OnInit {
   }
 
   getGeoInfoForAddress() {
+    this.spinnerService.show();
     this.geoLocationService.getLocation(this._address).subscribe( data => {
         const result = data['results'][0];
         const location = result['geometry']['location'];
@@ -122,8 +125,9 @@ export class GeoInfoComponent implements OnInit {
         this._centerLocation.latitude = this._geoLocation.latitude;
         this._centerLocation.longitude = this._geoLocation.longitude;
         this.getTimeZone();
-      }
-    );
+      }, _ => {
+        this.spinnerService.hide();
+      });
   }
 
   onChooseLocation(event) {
@@ -133,15 +137,18 @@ export class GeoInfoComponent implements OnInit {
       latitude: event.coords.lat,
       longitude: event.coords.lng
     };
+    this.spinnerService.show();
     this.geoLocationService
       .getFormattedAddress(this._geoLocation.latitude, this._geoLocation.longitude)
       .subscribe( data => {
         this._geoLocation.formattedAddress = data['results'][0]['formatted_address'];
         this.getTimeZone();
+      }, _ => {
+        this.spinnerService.hide();
       });
   }
 
-  onResize(event) {
+  onResize() {
     this._mapHeight = window.innerHeight;
   }
 
@@ -150,9 +157,10 @@ export class GeoInfoComponent implements OnInit {
     const componentInstance = modalRef.componentInstance;
     componentInstance.parentDate = (this._timeZone) ? moment.tz(this._dateTime, this._timeZone.timeZoneId) 
       : moment(this._dateTime);
-    modalRef.result.then(_ => {
+    modalRef.result.then( _ => {
       this._selectedDate = componentInstance.dateModel;
       this._selectedTime = componentInstance.timeModel;
+      this.spinnerService.show();
       this.getTimeZone();
     }, _ => {});
   }
@@ -160,6 +168,7 @@ export class GeoInfoComponent implements OnInit {
   changeDateToNow() {
     this._selectedDate = undefined;
     this._selectedTime = undefined;
+    this.spinnerService.show();
     this.getTimeZone();
   }
 
@@ -172,9 +181,11 @@ export class GeoInfoComponent implements OnInit {
         this._timeZone = tz;
         this._timeZoneOffset = this.getTimeZoneOffset();
         this.getSunInfo();
-        this.getMoonPhase();
+      }, _ => {
+        this.spinnerService.hide();
       });
     } else {
+      this.spinnerService.hide();
       this._timeZoneOffset = this.getTimeZoneOffsetFromMinutes(-this._dateTime.getTimezoneOffset());
     }
   }
@@ -210,14 +221,20 @@ export class GeoInfoComponent implements OnInit {
             polarNight: false
           };
         }
-      });
+        this.getMoonPhase();
+      }, _ => {
+        this.spinnerService.hide();
+      })
   }
 
   private getMoonPhase() {
     this.moonService
       .getMoonInfo(this._dateTime, this._timeZone.timeZoneId)
       .subscribe( data => {
+        this.spinnerService.hide();
         this._moonPhase = this.getMoonPhaseName(data['phase']);
+      }, _ => {
+        this.spinnerService.hide();
       });
   }
 
