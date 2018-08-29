@@ -43,6 +43,8 @@ export class GeoInfoComponent implements OnInit {
   private _selectedDate: NgbDateStruct;
   
   private _selectedTime: NgbTimeStruct;
+
+  private _selectedTimeZoneId: string;
   
   private _timeZoneOffset = '';
 
@@ -160,6 +162,7 @@ export class GeoInfoComponent implements OnInit {
     modalRef.result.then( _ => {
       this._selectedDate = componentInstance.dateModel;
       this._selectedTime = componentInstance.timeModel;
+      this._selectedTimeZoneId = (this._timeZone) ? this._timeZone.timeZoneId : null;
       this.spinnerService.show();
       this.getTimeZone();
     }, _ => {});
@@ -247,7 +250,7 @@ export class GeoInfoComponent implements OnInit {
         hours: this._selectedTime.hour, 
         minutes: this._selectedTime.minute
       });
-      const m = (this._timeZone) ? moment.tz(baseMoment.format('YYYY-MM-DD HH:mm'), this._timeZone.timeZoneId) : baseMoment;
+      const m = (this._selectedTimeZoneId) ? moment.tz(baseMoment.format('YYYY-MM-DD HH:mm'), this._selectedTimeZoneId) : baseMoment;
       return m.toDate();
     }
     return new Date();
