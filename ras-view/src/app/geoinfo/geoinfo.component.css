@@ -17,7 +17,6 @@ div {
   color: #369;
 }
 
-span.empty { 
-  width: 10px; 
-  display: inline-block 
+.extra-padding { 
+  padding-left: 10px;
 }
