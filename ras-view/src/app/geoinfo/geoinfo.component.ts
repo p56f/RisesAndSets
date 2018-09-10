@@ -227,6 +227,8 @@ export class GeoInfoComponent implements OnInit {
         this.getMoonPhase();
       }, _ => {
         this.spinnerService.hide();
+        this._sunInfo = undefined;
+        this._moonPhase = undefined;
       })
   }
 
@@ -238,6 +240,7 @@ export class GeoInfoComponent implements OnInit {
         this._moonPhase = this.getMoonPhaseName(data['phase']);
       }, _ => {
         this.spinnerService.hide();
+        this._moonPhase = undefined;
       });
   }
 
