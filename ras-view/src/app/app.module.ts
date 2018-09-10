@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule }    from '@angular/common/http';
 import { AgmCoreModule } from '@agm/core';
 import { NgbModule, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
-import { AngularDraggableModule } from 'angular2-draggable';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgxSpinnerModule } from 'ngx-spinner';
 
@@ -35,7 +34,6 @@ import * as apis from '../private/external.apis.json';
       apiKey: apis['googleAPIs']['key']
     }),
     NgbModule.forRoot(),
-    AngularDraggableModule,
     FontAwesomeModule,
     NgxSpinnerModule
   ],
