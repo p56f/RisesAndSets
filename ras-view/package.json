@@ -26,6 +26,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.2.0",
     "@ng-bootstrap/ng-bootstrap": "^3.0.0",
     "@types/googlemaps": "^3.30.11",
+    "angular2-draggable": "^2.1.2",
     "classlist.js": "^1.1.20150312",
     "core-js": "^2.5.4",
     "moment": "^2.22.2",

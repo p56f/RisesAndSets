@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { NgbDateStruct, NgbModal, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
-import { faSearch, faAngleDoubleLeft, faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 import * as moment from 'moment-timezone';
 
@@ -51,8 +51,6 @@ export class GeoInfoComponent implements OnInit {
   private _moonPhase = '';
 
   private _mapHeight = 0;
-
-  private _collapsed = false;
 
   constructor(
     private geoLocationService : GeoLocationService,
@@ -116,14 +114,6 @@ export class GeoInfoComponent implements OnInit {
     return faSearch;
   }
 
-  get collapsedIcon() {
-    return (this._collapsed) ? faAngleDoubleRight : faAngleDoubleLeft;
-  }
-
-  get collapsed() {
-    return this._collapsed;
-  }
-
   getGeoInfoForAddress() {
     this.spinnerService.show();
     this.geoLocationService.getLocation(this._address).subscribe( data => {
@@ -154,7 +144,6 @@ export class GeoInfoComponent implements OnInit {
       .getFormattedAddress(this._geoLocation.latitude, this._geoLocation.longitude)
       .subscribe( data => {
         this._geoLocation.formattedAddress = data['results'][0]['formatted_address'];
-        this._collapsed = false;
         this.getTimeZone();
       }, _ => {
         this.spinnerService.hide();
@@ -184,10 +173,6 @@ export class GeoInfoComponent implements OnInit {
     this._selectedTime = undefined;
     this.spinnerService.show();
     this.getTimeZone();
-  }
-
-  collapse() {
-    this._collapsed = !this._collapsed;
   }
 
   private getTimeZone() {

@@ -1,14 +1,19 @@
-<div id="geoInfo" class="col-sm-3" [style.height.px]="mapHeight" [ngbCollapse]="collapsed">
+<div>
+  <agm-map [style.height.px]="mapHeight" [latitude]="centerLocation.latitude" [longitude]="centerLocation.longitude" (mapClick)="onChooseLocation($event)">
+    <agm-marker *ngIf="geoLocation" [latitude]="geoLocation.latitude" [longitude]="geoLocation.longitude"></agm-marker>
+  </agm-map>
+</div>
+<div class="geoInfo" ngDraggable>
   <div class="input-group input-group-sm mb-3">
-    <input type="text" class="form-control" placeholder="Address" aria-label="Address" aria-describedby="basic-addon2"
-      [(ngModel)]="address" (keyup.enter)="getGeoInfoForAddress()">
+    <input type="text" class="form-control" placeholder="Address" aria-label="Address" aria-describedby="basic-addon2" [(ngModel)]="address"
+      (keyup.enter)="getGeoInfoForAddress()">
     <div class="input-group-append">
       <button class="btn btn-sm btn-outline-primary" type="button" (click)="getGeoInfoForAddress()">
         <fa-icon [icon]="searchIcon"></fa-icon>
       </button>
     </div>
   </div>
-  <hr />
+  <hr/>
   <div>
     <div>
       <span class="text-standard font-weight-bold small">Date and time: </span>
@@ -70,13 +75,4 @@
       <span class="text-standard small">{{moonPhase}}</span>
     </div>
   </div>
-</div>
-<div id="collapse" [style.height.px]="mapHeight" (click)="collapse()">
-    <fa-icon [icon]="collapsedIcon"></fa-icon>
-</div>
-<div>
-  <agm-map [style.height.px]="mapHeight" [latitude]="centerLocation.latitude" [longitude]="centerLocation.longitude"
-    (mapClick)="onChooseLocation($event)">
-    <agm-marker *ngIf="geoLocation" [latitude]="geoLocation.latitude" [longitude]="geoLocation.longitude"></agm-marker>
-  </agm-map>
 </div>
