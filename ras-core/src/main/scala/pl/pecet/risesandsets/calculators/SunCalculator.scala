@@ -21,13 +21,13 @@ class SunCalculator extends Calculator {
 
   def getDuration(start: Option[LocalTime], stop: Option[LocalTime]) : Option[LocalTime] = {
     start.flatMap {
-      t1 => stop.flatMap {
+      t1 => stop.map {
         t2 => {
           if (t1.isAfter(t2)) {
-            Some(LocalTime.ofSecondOfDay(SecondsInDay - t1.toSecondOfDay
-              + ChronoUnit.SECONDS.between(LocalTime.MIDNIGHT, t2)))
+            LocalTime.ofSecondOfDay(SecondsInDay - t1.toSecondOfDay
+              + ChronoUnit.SECONDS.between(LocalTime.MIDNIGHT, t2))
           } else {
-            Some(LocalTime.ofSecondOfDay(ChronoUnit.SECONDS.between(t1, t2)))
+            LocalTime.ofSecondOfDay(ChronoUnit.SECONDS.between(t1, t2))
           }
         }
       }
@@ -103,10 +103,9 @@ class SunCalculator extends Calculator {
     case Double.NegativeInfinity
          | Double.PositiveInfinity
          | Double.NaN => None
-    case _ => {
+    case _ =>
       val timeInSeconds = (time * 3600).toLong + timeOffset
       if (timeInSeconds >= 0) Some(timeInSeconds % SecondsInDay) else Some(SecondsInDay + timeInSeconds)
-    }
   }
 }
 
