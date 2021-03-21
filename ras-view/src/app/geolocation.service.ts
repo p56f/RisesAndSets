@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
-import * as apis from '../private/external.apis.json';
+import * as apis from '../private/apis.json';
 
 @Injectable({
   providedIn: 'root'

@@ -17,7 +17,7 @@ import { NgbDatePLParserFormatter } from './ngb-date-plparser-formatter';
 import { DmsPipe } from './dms.pipe';
 import { HoursPipe } from './hours.pipe';
 
-import * as apis from '../private/external.apis.json';
+import * as apis from '../private/apis.json';
 
 @NgModule({
   declarations: [
